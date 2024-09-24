@@ -34,10 +34,10 @@ const Login = () => {
         // console.log(result);
         localStorage.setItem("token", JSON.stringify(result.accessToken));
         localStorage.setItem("role", JSON.stringify(result.user.role));
-         toast.success('🦄 Login successful!', {
-            position: "top-right",
-            autoClose: 1000
-            })
+        //  toast.success('🦄 Login successful!', {
+        //     position: "top-right",
+        //     autoClose: 1000
+        //     })
     
 
          router.push(result.user.role === "admin" ? "/admin" : "/addcontact");

@@ -2,8 +2,6 @@
 import React from 'react'
 import { useRouter } from "next/navigation";
 import { Button } from '@/components/ui/button';
-
-
 const page = () => {
     const logout = () =>{
         localStorage.removeItem('token');

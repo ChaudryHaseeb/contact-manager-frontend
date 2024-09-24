@@ -23,6 +23,10 @@ const Management = () => {
       const userRole = JSON.parse(localStorage.getItem('role')); 
       setRole(userRole);
       // console.log('setRole==========',userRole);
+      toast.success('🦄 Login successful!', {
+        position: "top-right",
+        autoClose: 2000
+        })
 
       if (!token) {
         toast.error("You are not authorized. Please log in.");
@@ -40,6 +44,8 @@ const Management = () => {
         if (!response.ok) throw new Error("Failed to fetch contacts");
         const data = await response.json();
         setContacts(Array.isArray(data) ? data : []);
+        
+  
       } catch (error) {
         toast.error(error.message || "Error fetching contacts");
       }
@@ -84,8 +90,8 @@ const Management = () => {
           },
         });
 
+        console.log('resspone=========',response);
         if (!response.ok) throw new Error("Failed to delete contact");
-        // console.log('resspone=========',response);
 
         setContacts(contacts.filter((contact) => contact._id !== _id));
         toast.success("Contact deleted!");
@@ -153,7 +159,8 @@ const Management = () => {
         {contacts.map((contact) => (
           <li key={contact._id} className="flex justify-between items-center p-2 border-b text-white">
             <span>{contact.name} - {contact.email} - {contact.number}</span>
-            {/* {console.log("role============",role)} */}
+            {console.log("role============",role)}
+            {console.log('contact----------',contact)}
             {role === "user" && (
               <Button onClick={() => handleDelete(contact._id)} variant="destructive">
               Delete

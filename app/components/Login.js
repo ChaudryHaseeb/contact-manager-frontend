@@ -1,36 +1,26 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { Button } from "@/components/ui/button";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { validatePassword } from "../components/ValidatePassword";
 import Image from "next/image";
+// import Home from "./Home";
 
-export default function Signup() {
+const Login = ({ onLogin }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
   } = useForm();
-  const [serverError, setServerError] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    if (!validatePassword(data.password)) {
-      setError("password", {
-        type: "manual",
-        message:
-          "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.",
-      });
-      return;
-    }
-
     try {
-      const response = await fetch("http://localhost:8080/api/user/register", {
+      const response = await fetch("http://localhost:8080/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,28 +28,26 @@ export default function Signup() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
       if (response.ok) {
-        // window.confirm("Sign Up successful!");
-        toast.success('🦄 Sign Up successful!', {
+        const result = await response.json();
+        // const show= true;
+        // console.log(result);
+        localStorage.setItem("token", JSON.stringify(result.accessToken));
+        localStorage.setItem("role", JSON.stringify(result.user.role));
+        toast.success("🦄 Login successful!", {
           position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-          });
-        router.push("/login");
+          autoClose: 1000,
+        });
+        onLogin();
+        router.push(result.user.role === "admin" ? "/admin" : "/home");
       } else {
-        setServerError(result.message || "An error occurred");
-        toast.error(result.message || "An error occurred");
+        const result = await response.json();
+        setError(result.message || "Login failed");
+        toast.error(result.message || "Login failed");
       }
     } catch (error) {
-      setServerError("An error occurred");
-      toast.error("An error occurred while trying to sign up");
+      setError("An error occurred while trying to log in");
+      toast.error("An error occurred while trying to log in");
     }
   };
 
@@ -67,40 +55,23 @@ export default function Signup() {
     <div className="flex items-center justify-center min-h-screen bg-[url('/Login.avif')] bg-cover bg-gray-100">
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={1000}
         hideProgressBar={false}
       />
-      <div className="w-full max-w-md bg-white mt-10 p-8 rounded-lg shadow-md">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
         <div className="flex items-center">
-          <h2 className="text-2xl font-bold mb-6">Sign Up </h2>
+          <h2 className="text-2xl font-bold mb-6">Login</h2>
           <Image
             src="/Pencil3-Gradient.gif"
             alt="Pencil Gif"
             unoptimized
             width={40}
-            height={0}
+            height={40}
             className="object-contain pb-6 ml-3"
           />
         </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Username
-            </label>
-            <input
-              {...register("username", { required: "Username is required" })}
-              id="username"
-              type="text"
-              placeholder="username"
-              className="mt-1 p-2 border rounded w-full"
-            />
-            {errors.username && (
-              <p className="text-red-500 text-sm">{errors.username.message}</p>
-            )}
-          </div>
           <div>
             <label
               htmlFor="email"
@@ -137,17 +108,19 @@ export default function Signup() {
               <p className="text-red-500 text-sm">{errors.password.message}</p>
             )}
           </div>
-          <Button className="w-full" type="submit" variant="default">
-            Sign Up
+          <Button className="w-full" type="submit">
+            Login
           </Button>
-          {serverError && <p className="text-red-500">{serverError}</p>}
+          {error && <p className="text-red-500 mt-2">{error}</p>}
         </form>
         <div className="mt-6 text-blue-500 text-center">
-          <Link href="/login">
-            <div className="hover:underline">Login Here </div>
+          <Link href="/signup">
+            <div className="hover:underline">Sign Up Here </div>
           </Link>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Login;

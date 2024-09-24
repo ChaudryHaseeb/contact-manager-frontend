@@ -22,6 +22,7 @@ const Page = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log('token======',{token})
 
         if (!response.ok) throw new Error("Failed to fetch contacts");
   
@@ -76,7 +77,7 @@ const Page = () => {
     </thead>
     <tbody className="items-start">
       {contacts.map((contact) => (
-        <tr key={contact._id} className="flex justify-between items-center p-2 border-b text-white">
+        <tr key={contact} className="flex justify-between items-center p-2 border-b text-white">
           <td className="pl-8">{contact.name}</td>
           <td className="px-40">{contact.email}</td>
           <td className="px-44">{contact.number}</td>

@@ -3,28 +3,61 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+
 const Navbar = () => {
   const router = useRouter();
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const logout = () =>{
+    localStorage.removeItem('token');
+
+};
+const handleLogout = () => {
+    logout();
+    router.push('/login'); 
+  };
+
+  const handleStorageChange = () => {
+    const token = localStorage.getItem('token')?.replace(/"/g, "");
+    console.log('token----------------',token);
+    setIsLoggedIn(!!token);
+  };
+
+  useEffect(() => {
+    
+    window.addEventListener("storage", handleStorageChange);
+    
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [isLoggedIn])
+  
   const handleScroll = () => {
     if (typeof window !== "undefined") {
       if (window.scrollY > lastScrollY) {
         setVisible(false);
       } else {
+        handleStorageChange();
         setVisible(true);
       }
       setLastScrollY(window.scrollY);
     }
   };
-
+  
   useEffect(() => {
+  
     window.addEventListener("scroll", handleScroll);
+  
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollY]);
+
+  
+  
 
   return (
     <div
@@ -61,14 +94,18 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="cart absolute right-0 top-5 mx-6 cursor-pointer flex">
-        <Link href="/login">
-          <Image
-            src="/contact-gradient.gif"
-            alt="Login"
-            unoptimized
-            width={40}
-            height={25}
-          />
+        <Link href={isLoggedIn ? "/" : "/login"}>
+          {isLoggedIn ? (
+            <Button onClick={handleLogout} variant="destructive">Logout</Button>
+          ) : (
+            <Image
+              src="/contact-gradient.gif"
+              alt="Login"
+              unoptimized
+              width={40}
+              height={25}
+            />
+          )}
         </Link>
       </div>
     </div>
