@@ -61,7 +61,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="cart absolute right-0 top-5 mx-6 cursor-pointer flex">
-        <Link href="/logout">
+        <Link href="/login">
           <Image
             src="/contact-gradient.gif"
             alt="Login"
