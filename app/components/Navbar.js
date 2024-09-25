@@ -56,9 +56,6 @@ const handleLogout = () => {
     };
   }, [lastScrollY]);
 
-  
-  
-
   return (
     <div
       className={`transition-transform duration-300 fixed top-0 w-full bg-transparent z-10 flex flex-col md:flex-row md:justify-start justify-center items-center py-1 shadow-md ${
