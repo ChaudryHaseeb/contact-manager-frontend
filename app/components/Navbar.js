@@ -108,5 +108,4 @@ const handleLogout = () => {
     </div>
   );
 };
-
 export default Navbar;
