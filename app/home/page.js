@@ -13,11 +13,18 @@ export default function Home() {
       <section className="text-gray-300 body-font bg-[url('/home4.avif')] bg-cover">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-          <div className="flex items-center">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
-              Contact Manager </h1>
-            <Image src="/Layers-Gradient.gif" alt="Pencil Gif" unoptimized width={55} height={55} className='object-contain pb-2 ml-3'/>
-         </div>
+            <div className="flex items-center">
+              <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
+                Contact Manager{" "}
+              </h1>
+              <Image
+                src="/Layers-Gradient.gif"
+                alt="Pencil Gif"
+                width={55}
+                height={55}
+                className="object-contain pb-2 ml-3"
+              />
+            </div>
             <p className="lg:w-1/2 w-full leading-relaxed text-gray-400">
               Welcome to the Contact Manager! Here, you can efficiently manage
               your contacts, ensuring that you have all the information you need

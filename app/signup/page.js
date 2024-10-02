@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { Checkbox } from "@/components/ui/checkbox"
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { validatePassword } from "../components/ValidatePassword";
@@ -17,9 +17,11 @@ export default function Signup() {
     setError,
   } = useForm();
   const [serverError, setServerError] = useState("");
-  const router = useRouter();
+  const [emailSent, setEmailSent] = useState(false);
+  const [visiblePassword, setVisiblePassword]= useState(false);
 
   const onSubmit = async (data) => {
+    setServerError("");
     if (!validatePassword(data.password)) {
       setError("password", {
         type: "manual",
@@ -40,19 +42,22 @@ export default function Signup() {
 
       const result = await response.json();
       if (response.ok) {
-        // window.confirm("Sign Up successful!");
-        toast.success('🦄 Sign Up successful!', {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-          });
-        router.push("/login");
+        toast.success(
+          "🦄 Sign Up successful! Please check your email to verify your account.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          }
+        );
+
+        setEmailSent(true);
       } else {
         setServerError(result.message || "An error occurred");
         toast.error(result.message || "An error occurred");
@@ -76,7 +81,6 @@ export default function Signup() {
           <Image
             src="/Pencil3-Gradient.gif"
             alt="Pencil Gif"
-            unoptimized
             width={40}
             height={0}
             className="object-contain pb-6 ml-3"
@@ -96,6 +100,7 @@ export default function Signup() {
               type="text"
               placeholder="username"
               className="mt-1 p-2 border rounded w-full"
+              autoComplete="username"
             />
             {errors.username && (
               <p className="text-red-500 text-sm">{errors.username.message}</p>
@@ -126,22 +131,32 @@ export default function Signup() {
             >
               Password
             </label>
-            <input
+            <input 
               {...register("password", { required: "Password is required" })}
               id="password"
-              type="password"
+              type={visiblePassword ? 'text' : "password"}
               placeholder="Password"
               className="mt-1 p-2 border rounded w-full"
-            />
+              autoComplete="new-password"
+            />           
+
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password.message}</p>
             )}
           </div>
+          <div className="flex mt-1 items-center">
+             <Checkbox id='password' checked = {visiblePassword} onCheckedChange={()=>setVisiblePassword(!visiblePassword)}  />
+             <label htmlFor="password" className="ml-2 ">Show Password</label>
+
+             </div>
           <Button className="w-full" type="submit" variant="default">
             Sign Up
           </Button>
           {serverError && <p className="text-red-500">{serverError}</p>}
         </form>
+
+        {emailSent && <div className="text-green-600 mt-4">Email Sent Successfully!! Verify Your Email...</div>}
+
         <div className="mt-6 text-blue-500 text-center">
           <Link href="/login">
             <div className="hover:underline">Login Here </div>

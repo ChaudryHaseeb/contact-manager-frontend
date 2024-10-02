@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Login = () => {
   const {
@@ -16,8 +17,10 @@ const Login = () => {
   } = useForm();
   const [error, setError] = useState("");
   const router = useRouter();
+  const [visiblePassword, setVisiblePassword] = useState(false);
 
   const onSubmit = async (data) => {
+    setError("");
     try {
       const response = await fetch("http://localhost:8080/api/user/login", {
         method: "POST",
@@ -28,21 +31,18 @@ const Login = () => {
       });
 
       if (response.ok) {
-      
         const result = await response.json();
-        // const show= true;
         // console.log(result);
         localStorage.setItem("token", JSON.stringify(result.accessToken));
         localStorage.setItem("role", JSON.stringify(result.user.role));
-        //  toast.success('🦄 Login successful!', {
-        //     position: "top-right",
-        //     autoClose: 1000
-        //     })
-    
+        toast.success("🦄 Login successful!", {
+          position: "top-right",
+          autoClose: 1000,
+        });
 
-         router.push(result.user.role === "admin" ? "/admin" : "/addcontact");
-        
-        
+        setTimeout(() => {
+          router.push(result.user.role === "admin" ? "/admin" : "/addcontact");
+        }, 1000);
       } else {
         const result = await response.json();
         setError(result.message || "Login failed");
@@ -56,7 +56,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[url('/Login.avif')] bg-cover bg-gray-100">
-   <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}
@@ -67,7 +67,6 @@ const Login = () => {
           <Image
             src="/Pencil3-Gradient.gif"
             alt="Pencil Gif"
-            unoptimized
             width={40}
             height={40}
             className="object-contain pb-6 ml-3"
@@ -88,6 +87,7 @@ const Login = () => {
               type="email"
               placeholder="Email"
               className="mt-1 p-2 border rounded w-full"
+              autoComplete="username"
             />
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -103,13 +103,19 @@ const Login = () => {
             <input
               {...register("password", { required: "Password is required" })}
               id="password"
-              type="password"
+              type={visiblePassword? 'text' : "password"}
               placeholder="Password"
               className="mt-1 p-2 border rounded w-full"
+              autoComplete="current-password"
+
             />
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password.message}</p>
             )}
+          </div>
+          <div className="flex items-center mt-1">
+            <Checkbox checked={visiblePassword} onCheckedChange={()=>setVisiblePassword(!visiblePassword)} />
+              <label htmlFor="password" id="password" className="ml-2">Show Password</label>
           </div>
           <Button className="w-full" type="submit">
             Login

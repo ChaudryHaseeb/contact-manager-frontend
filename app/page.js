@@ -8,7 +8,7 @@ const page = () => {
     <div>
       <Home />
       {/* <Admin/> */}
-{/* <Login/> */}
+      {/* <Login/> */}
     </div>
   );
 };

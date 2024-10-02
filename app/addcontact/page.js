@@ -30,8 +30,8 @@ const Management = () => {
 
   const fetchContacts = async (pageNumber) => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
-    const userRole = JSON.parse(localStorage.getItem('role')); 
-      setRole(userRole);
+    const userRole = JSON.parse(localStorage.getItem("role"));
+    setRole(userRole);
 
     if (!token) {
       toast.error("You are not authorized. Please log in.");
@@ -59,7 +59,7 @@ const Management = () => {
   };
 
   useEffect(() => {
-    fetchContacts(page); 
+    fetchContacts(page);
   }, [page]);
 
   const onSubmit = async (data) => {
@@ -99,7 +99,7 @@ const Management = () => {
             },
           }
         );
-
+        // console.log('contact id-------',_id)
         if (!response.ok) throw new Error("Failed to delete contact");
 
         setContacts(contacts.filter((contact) => contact._id !== _id));
@@ -119,7 +119,7 @@ const Management = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 max-h-lvh bg-[url('/Login.avif')] bg-cover">
+    <div className="container mx-auto p-4 bg-[url('/Login.avif')] bg-cover h-screen">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -131,8 +131,10 @@ const Management = () => {
         draggable
         pauseOnHover
       />
+
+      {/* Header */}
       <div className="flex items-center justify-center">
-        <h1 className="text-white text-3xl font-bold mt-28 mb-6">
+        <h1 className="text-white text-3xl font-bold mt-14 mb-6">
           Contact Management
         </h1>
         <Image
@@ -141,10 +143,11 @@ const Management = () => {
           unoptimized
           width={40}
           height={40}
-          className="object-contain pb-6 ml-3 mt-28"
+          className="object-contain pb-6 ml-3 mt-14"
         />
       </div>
 
+      {/* Form to Add Contact */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="flex items-center justify-center">
           <input
@@ -161,8 +164,7 @@ const Management = () => {
             {...register("email", {
               required: "Email is required",
               pattern: {
-                value:
-                  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "Invalid email format",
               },
             })}
@@ -195,47 +197,77 @@ const Management = () => {
         </div>
       </form>
 
-      <ul className="mt-6">
-        {contacts.map((contact) => (
-          <li
-            key={contact._id}
-            className="flex justify-between items-center p-2 border-b text-white"
-          >
-            <span>
-              {contact.name} - {contact.email} - {contact.number}
-            </span>
-            {role === "user" && (
-              <Button
-                onClick={() => handleDelete(contact._id)}
-                variant="destructive"
-              >
-                Delete
-              </Button>
+      {/* Contacts Table */}
+      <div className="overflow-x-auto mt-6">
+        <table className="min-w-full bg-white text-black table-auto">
+          <thead className="bg-black text-white">
+            <tr>
+              <th className="py-2 px-4 text-left">Name</th>
+              <th className="py-2 px-4 text-left">Email</th>
+              <th className="py-2 px-4 text-left">Phone</th>
+              <th className="py-2 px-4 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.length > 0 ? (
+              contacts.map((contact) => (
+                <tr key={contact._id} className="border-b border-gray-500">
+                  <td className="py-2 px-4">{contact.name}</td>
+                  <td className="py-2 px-4">{contact.email}</td>
+                  <td className="py-2 px-4">{contact.number}</td>
+                  <td className="py-2 px-4">
+                    {role === "user" && (
+                      <Button
+                        onClick={() => handleDelete(contact._id)}
+                        variant="destructive"
+                      >
+                        Delete
+                      </Button>
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center py-4">
+                  No contacts found.
+                </td>
+              </tr>
             )}
-          </li>
-        ))}
-      </ul>
+          </tbody>
+        </table>
+      </div>
 
-      <Pagination className={'mt-10'}>
-       <PaginationContent>
-         <PaginationItem>
-           <PaginationPrevious onClick={handlePreviousPage} />
-         </PaginationItem>
-         <PaginationItem>
-           <PaginationLink isActive className={'bg-white text-black hover:bg-black hover:text-white'}>{page}</PaginationLink>
-         </PaginationItem>
-         <PaginationItem>
-           <PaginationEllipsis className={' text-white'} />
-         </PaginationItem>
-         <PaginationItem>
-           <PaginationNext onClick={handleNextPage} />
-         </PaginationItem>
-       </PaginationContent>
-     </Pagination>
-   </div>
- );
+      {/* Pagination */}
+      <Pagination className="mt-10">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={handlePreviousPage}
+              className={"cursor-pointer"}
+            />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink
+              isActive
+              className="bg-white text-black hover:bg-black hover:text-white"
+            >
+              {page}
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis className="text-white" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext
+              onClick={handleNextPage}
+              className={"cursor-pointer"}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
+  );
 };
 
- export default Management;
-
-
+export default Management;

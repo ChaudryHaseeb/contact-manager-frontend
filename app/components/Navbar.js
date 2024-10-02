@@ -11,46 +11,51 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const logout = () =>{
-    localStorage.removeItem('token');
+  const logout = () => {
+    localStorage.removeItem("token");
 
-};
-const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+  const handleLogout = () => {
     logout();
-    router.push('/login'); 
+    router.push("/login");
   };
 
-  const handleStorageChange = () => {
-    const token = localStorage.getItem('token')?.replace(/"/g, "");
-    console.log('token----------------',token);
+  const checkLoginStatus = () => {
+    const token = localStorage.getItem("token")?.replace(/"/g, "");
     setIsLoggedIn(!!token);
   };
 
   useEffect(() => {
-    
+    checkLoginStatus();
+
+    const handleStorageChange = (event) => {
+      if (event.key === "token") {
+        checkLoginStatus();
+      }
+    };
+
     window.addEventListener("storage", handleStorageChange);
-    
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [isLoggedIn])
-  
+  }, [isLoggedIn]);
+
   const handleScroll = () => {
     if (typeof window !== "undefined") {
       if (window.scrollY > lastScrollY) {
         setVisible(false);
       } else {
-        handleStorageChange();
         setVisible(true);
       }
       setLastScrollY(window.scrollY);
     }
   };
-  
+
   useEffect(() => {
-  
     window.addEventListener("scroll", handleScroll);
-  
+    checkLoginStatus();
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -70,7 +75,7 @@ const handleLogout = () => {
             unoptimized
             width={40}
             height={25}
-          />
+                      />
         </Link>
       </div>
       <div className="nav">
@@ -93,7 +98,9 @@ const handleLogout = () => {
       <div className="cart absolute right-0 top-5 mx-6 cursor-pointer flex">
         <Link href={isLoggedIn ? "/" : "/login"}>
           {isLoggedIn ? (
-            <Button onClick={handleLogout} variant="destructive">Logout</Button>
+            <Button onClick={handleLogout} variant="destructive">
+              Logout
+            </Button>
           ) : (
             <Image
               src="/contact-gradient.gif"
