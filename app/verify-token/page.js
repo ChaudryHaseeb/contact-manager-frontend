@@ -3,15 +3,25 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const VerifyToken = () => {
+
+      //---------------------------------------- CONSTANTS DICLARATION ------------------------------------------
+
   const router = useRouter();
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
+      //---------------------------------------- USE EFFECT ------------------------------------------
+
   useEffect(() => {
+
+        //---------------------------------------- VERIFY EMAIL FUNCTION ------------------------------------------
+
     const verifyEmail = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get('token');
       const email = urlParams.get('email');
+
+          //---------------------------------------- API Fetch GET ------------------------------------------
 
       if (token && email) {
         try {

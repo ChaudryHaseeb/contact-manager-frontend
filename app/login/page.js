@@ -10,6 +10,9 @@ import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const Login = () => {
+
+      //---------------------------------------- CONSTANTS DICLARATION ------------------------------------------
+
   const {
     register,
     handleSubmit,
@@ -19,8 +22,13 @@ const Login = () => {
   const router = useRouter();
   const [visiblePassword, setVisiblePassword] = useState(false);
 
+      //---------------------------------------- ONSUBMIT FUNCTION ------------------------------------------
+
   const onSubmit = async (data) => {
     setError("");
+
+        //---------------------------------------- API Fetch POST ------------------------------------------
+
     try {
       const response = await fetch("http://localhost:8080/api/user/login", {
         method: "POST",
@@ -61,7 +69,7 @@ const Login = () => {
         autoClose={1000}
         hideProgressBar={false}
       />
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md text-black">
         <div className="flex items-center">
           <h2 className="text-2xl font-bold mb-6">Login</h2>
           <Image
@@ -72,6 +80,9 @@ const Login = () => {
             className="object-contain pb-6 ml-3"
           />
         </div>
+
+        {/* //---------------------------------------- LOGIN FORM ------------------------------------------ */}
+
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
@@ -122,6 +133,9 @@ const Login = () => {
           </Button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </form>
+
+        {/* //---------------------------------------- LINK SIGN  UP PAGE  ------------------------------------------ */}
+
         <div className="mt-6 text-blue-500 text-center">
           <Link href="/signup">
             <div className="hover:underline">Sign Up Here </div>

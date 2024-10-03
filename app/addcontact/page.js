@@ -14,8 +14,20 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import jsPDF from 'jspdf';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Management = () => {
+
+      //---------------------------------------- CONSTANTS DICLARATION ------------------------------------------
+
   const {
     register,
     handleSubmit,
@@ -27,20 +39,26 @@ const Management = () => {
   const [role, setRole] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(2); 
 
+    //---------------------------------------- FETCH CONTACT FUNCTION ------------------------------------------
+
+  
   const fetchContacts = async (pageNumber) => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
     const userRole = JSON.parse(localStorage.getItem("role"));
     setRole(userRole);
-
+    
     if (!token) {
       toast.error("You are not authorized. Please log in.");
       return;
-    }
 
+    }
+    //---------------------------------------- API Fetch GET ------------------------------------------
+    
     try {
       const response = await fetch(
-        `http://localhost:8080/api/contacts?page=${pageNumber}&limit=2`,
+        `http://localhost:8080/api/contacts?page=${pageNumber}&limit=${limit}`,
         {
           method: "GET",
           headers: {
@@ -58,12 +76,25 @@ const Management = () => {
     }
   };
 
+  //------------------------------------------ USE EFFECT -------------------------------
+
   useEffect(() => {
-    fetchContacts(page);
-  }, [page]);
+    fetchContacts(page, limit);
+  }, [page, limit]);
+
+    //---------------------------------------- HANDLE LIMIT CHANGE FUNCTION ------------------------------------------
+  
+    const handleLimitChange = (event) => {
+      setLimit(Number(event.target.value));
+      setPage(1); // Reset to first page when the limit is changed
+    };
+
+  //------------------------------------ ONSUBMIT FUNCTION ---------------------------------
 
   const onSubmit = async (data) => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
+
+        //---------------------------------------- API Fetch POST ------------------------------------------
 
     try {
       const response = await fetch("http://localhost:8080/api/contacts", {
@@ -86,9 +117,15 @@ const Management = () => {
     }
   };
 
+      //---------------------------------------- HANDLE DELETE FUNCTION ------------------------------------------
+
+
   const handleDelete = async (_id) => {
     if (window.confirm("Are you sure you want to delete this contact?")) {
       const token = localStorage.getItem("token")?.replace(/"/g, "");
+
+          //---------------------------------------- API Fetch DELETE ------------------------------------------
+
       try {
         const response = await fetch(
           `http://localhost:8080/api/contacts/${_id}`,
@@ -110,13 +147,103 @@ const Management = () => {
     }
   };
 
+      //---------------------------------------- HANDLE NEXT PAGE FUNCTION ------------------------------------------
+
   const handleNextPage = () => {
     if (page < totalPages) setPage(page + 1);
   };
 
+      //---------------------------------------- HANDLE PREVIOUSE PAFE FUNCTION ------------------------------------------
+
+
   const handlePreviousPage = () => {
     if (page > 1) setPage(page - 1);
   };
+
+
+  //--------------------------------------- CSV Function ---------------------------------------
+
+    //convert json data to csv formate
+
+    const convertToCSV = (data) => {
+      if (!data.length) {
+          return '';
+      }
+      const csvRows = [];
+
+      //get header
+
+      const headers = Object.keys(data[0]);
+      csvRows.push(headers.join(','));
+
+      //loops through each contact and push contact to csv rows
+
+      for (const row of data) {
+          const values = headers.map(header => `${row[header]}`);
+          csvRows.push(values.join(','));
+      };
+
+      return csvRows.join('\n');
+  };
+
+  // trigger download for csv
+      //---------------------------------------- DOWNLOAD CSV FUNCTION ------------------------------------------
+
+
+  const downloadCSV = () =>{
+      if (contacts.length === 0) {
+          toast.error('No Contacts')
+      }
+      const csvData = convertToCSV(contacts);
+      const blob = new Blob([csvData],{type: "text/csv"});
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', 'contact.csv');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+  };
+
+
+  //---------------------------------------- DOWNLOAD PDF FUNCTION -------------------------------------------------
+
+  const downloadPDF = () =>{
+    if(contacts.length === 0){
+        toast.error('No Contacts')
+    }
+    const doc = new jsPDF();
+
+    //title
+    doc.setFontSize(18)
+    doc.text('Contacts List', 70, 20)
+
+    let ypos = 40;
+
+    //header
+    doc.setFontSize(16);
+    doc.text('Name', 25, ypos);
+    doc.text('Email', 80, ypos);
+    doc.text('Phone', 143, ypos);
+
+    ypos += 10;
+
+    //body
+    contacts.forEach(contact => {
+        doc.setFontSize(12)
+        doc.text(contact.name, 20, ypos);
+        doc.text(contact.email, 70, ypos);
+        doc.text(contact.number, 140, ypos);
+
+        doc.line(20,ypos + 2, 190, ypos + 2);
+
+        ypos += 10;
+    });
+
+    doc.save('contacts.pdf');
+
+ }
 
   return (
     <div className="container mx-auto p-4 bg-[url('/Login.avif')] bg-cover h-screen">
@@ -132,9 +259,8 @@ const Management = () => {
         pauseOnHover
       />
 
-      {/* Header */}
-      <div className="flex items-center justify-center">
-        <h1 className="text-white text-3xl font-bold mt-14 mb-6">
+      <div className="flex items-center justify-center mt-8">
+        <h1 className="text-white text-3xl font-bold mb-6">
           Contact Management
         </h1>
         <Image
@@ -143,11 +269,13 @@ const Management = () => {
           unoptimized
           width={40}
           height={40}
-          className="object-contain pb-6 ml-3 mt-14"
+          className="object-contain pb-6 ml-3"
         />
       </div>
 
-      {/* Form to Add Contact */}
+      {/* //---------------------------------------- FORM INPUTS ------------------------------------------ */}
+
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="flex items-center justify-center">
           <input
@@ -197,7 +325,22 @@ const Management = () => {
         </div>
       </form>
 
-      {/* Contacts Table */}
+
+       {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
+
+       <DropdownMenu  >
+    <DropdownMenuTrigger className = 'flex ml-auto bg-white text-black rounded-sm p-2'>Download</DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuLabel>Contact's Download</DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem onClick = {downloadCSV} className='cursor-pointer hover:bg-slate-600'>CSV File</DropdownMenuItem>
+      <DropdownMenuItem onClick = {downloadPDF} className='cursor-pointer hover:bg-slate-800'>PDF File</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+
+  
+  {/*------------------------------------------ TABLE DATA DISPLAY --------------------------------------- */}
+
       <div className="overflow-x-auto mt-6">
         <table className="min-w-full bg-white text-black table-auto">
           <thead className="bg-black text-white">
@@ -238,9 +381,27 @@ const Management = () => {
         </table>
       </div>
 
-      {/* Pagination */}
-      <Pagination className="mt-10">
-        <PaginationContent>
+      {/*------------------------------------------- Pagination ---------------------------------------*/}
+
+               {/*-------------------------------- Limit Dropdown ----------------------------*/}
+
+               
+
+      <Pagination className="flex justify-center items-center mt-10 gap-72">
+      <div className="flex justify-center items-center">
+        <label htmlFor="limit" className="mr-2 p-2 bg-white text-black rounded-sm">Items per page:</label>
+        <select
+          id="limit"
+          className="border rounded text-black p-2"
+          value={limit}
+          onChange={handleLimitChange}
+        >
+          <option value={2}>2</option>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+        </select>
+      </div>
+        <PaginationContent className="">
           <PaginationItem>
             <PaginationPrevious
               onClick={handlePreviousPage}
@@ -252,7 +413,7 @@ const Management = () => {
               isActive
               className="bg-white text-black hover:bg-black hover:text-white"
             >
-              {page}
+             {page}
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
@@ -265,7 +426,9 @@ const Management = () => {
             />
           </PaginationItem>
         </PaginationContent>
+      <span className="mt-2 ml-auto">{`Page ${page} of ${totalPages}`}</span>
       </Pagination>
+
     </div>
   );
 };

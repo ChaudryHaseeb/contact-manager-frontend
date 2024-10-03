@@ -10,6 +10,9 @@ import { validatePassword } from "../components/ValidatePassword";
 import Image from "next/image";
 
 export default function Signup() {
+
+      //---------------------------------------- CONSTANTS DICLARATION ------------------------------------------
+
   const {
     register,
     handleSubmit,
@@ -19,6 +22,8 @@ export default function Signup() {
   const [serverError, setServerError] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const [visiblePassword, setVisiblePassword]= useState(false);
+
+      //---------------------------------------- ONSUBMIT FUNCTION ------------------------------------------
 
   const onSubmit = async (data) => {
     setServerError("");
@@ -30,6 +35,8 @@ export default function Signup() {
       });
       return;
     }
+
+        //---------------------------------------- API Fetch POST ------------------------------------------
 
     try {
       const response = await fetch("http://localhost:8080/api/user/register", {
@@ -75,7 +82,7 @@ export default function Signup() {
         autoClose={2000}
         hideProgressBar={false}
       />
-      <div className="w-full max-w-md bg-white mt-10 p-8 rounded-lg shadow-md">
+      <div className="w-full max-w-md bg-white mt-10 p-8 rounded-lg shadow-md text-black">
         <div className="flex items-center">
           <h2 className="text-2xl font-bold mb-6">Sign Up </h2>
           <Image
@@ -86,6 +93,9 @@ export default function Signup() {
             className="object-contain pb-6 ml-3"
           />
         </div>
+
+        {/* //---------------------------------------- SIGN UP FORM  ------------------------------------------ */}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label
@@ -155,7 +165,12 @@ export default function Signup() {
           {serverError && <p className="text-red-500">{serverError}</p>}
         </form>
 
+        {/* //---------------------------------------- CONDITION ------------------------------------------ */}
+
+
         {emailSent && <div className="text-green-600 mt-4">Email Sent Successfully!! Verify Your Email...</div>}
+
+        {/* //---------------------------------------- LINK LOGIN PAGE  ------------------------------------------ */}
 
         <div className="mt-6 text-blue-500 text-center">
           <Link href="/login">

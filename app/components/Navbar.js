@@ -6,25 +6,37 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
+
+      //---------------------------------------- CONSTANTS DICLARATION ------------------------------------------
+
   const router = useRouter();
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+      //---------------------------------------- LOGOUT FUNCTION ------------------------------------------
 
   const logout = () => {
     localStorage.removeItem("token");
 
     setIsLoggedIn(false);
   };
+
+      //---------------------------------------- HANDLE LOGOUT FUNCTION ------------------------------------------
+
   const handleLogout = () => {
     logout();
     router.push("/login");
   };
 
+      //---------------------------------------- CHECK LOGIN STATUS FUNCTION ------------------------------------------
+
   const checkLoginStatus = () => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
     setIsLoggedIn(!!token);
   };
+
+      //---------------------------------------- USE EFFECT ------------------------------------------
 
   useEffect(() => {
     checkLoginStatus();
@@ -41,6 +53,9 @@ const Navbar = () => {
     };
   }, [isLoggedIn]);
 
+      //---------------------------------------- HANDLE SCROLL FUNCTION ------------------------------------------
+
+
   const handleScroll = () => {
     if (typeof window !== "undefined") {
       if (window.scrollY > lastScrollY) {
@@ -51,6 +66,8 @@ const Navbar = () => {
       setLastScrollY(window.scrollY);
     }
   };
+
+      //---------------------------------------- USE EFFECT ------------------------------------------
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -95,6 +112,9 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
+      
+      {/* //---------------------------------------- CHECKING CONDITION ------------------------------------------ */}
+
       <div className="cart absolute right-0 top-5 mx-6 cursor-pointer flex">
         <Link href={isLoggedIn ? "/" : "/login"}>
           {isLoggedIn ? (
