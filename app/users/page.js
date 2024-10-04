@@ -21,6 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Navbar from "../components/Navbar";
 
 const Page = () => {
 
@@ -205,9 +206,11 @@ const Page = () => {
  }
 
   return (
-    <div className="container mx-auto p-4 max-h-lvh bg-[url('/Admin-User-Management3.webp')] bg-cover bg-center h-screen">
+    <>
+     <Navbar/>
+    <div className="container mx-auto p-4 bg-[url('/Admin-User-Management3.webp')] bg-cover bg-center min-h-screen">
       <div className="flex items-center justify-center">
-        <h1 className="text-white text-3xl font-bold mt-20 mb-6">
+        <h1 className="text-white text-3xl font-bold mt-16 mb-1">
           Users Management
         </h1>
       </div>
@@ -228,7 +231,7 @@ const Page = () => {
       {/* //---------------------------------------- TABLE DATA DISPLAY ------------------------------------------ */}
 
 
-      <div className="overflow-x-auto mt-6">
+      <div className="overflow-x-auto mt-6 min-h-[200px]">
         <table className="min-w-full text-center text-black">
           <thead className="bg-black text-white">
             <tr>
@@ -317,6 +320,7 @@ const Page = () => {
         <span className="mt-2 ml-auto">{`Page ${page} of ${totalPages}`}</span>
       </Pagination>
     </div>
+    </>
   );
 };
 

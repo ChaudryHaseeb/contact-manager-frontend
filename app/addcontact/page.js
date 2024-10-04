@@ -23,6 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Navbar from "../components/Navbar";
 
 const Management = () => {
 
@@ -40,6 +41,12 @@ const Management = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [limit, setLimit] = useState(2); 
+  const [editingContactId, setEditingContactId] = useState(null);
+  const [updatedContact, setUpdatedContact] = useState({
+    name : '',
+    email : '',
+    number : '',
+  });
 
     //---------------------------------------- FETCH CONTACT FUNCTION ------------------------------------------
 
@@ -116,6 +123,65 @@ const Management = () => {
       toast.error(error.message || "Error adding contact");
     }
   };
+
+      //---------------------------------------- HANDLE PUT FUNCTION ------------------------------------------
+
+          const handleEdit = (contact) => {
+            setEditingContactId(contact._id);
+            setUpdatedContact({
+              name : contact.name,
+              email : contact.email,
+              number : contact.number,
+            });
+          };
+
+
+          const handleInputChange = (e) =>{
+            const {name, value} = e.target;
+
+            setUpdatedContact((prevState)=>({
+              ...prevState,
+              [name] : value,
+            })
+          );
+          };
+
+
+          const handleUpdate = async (contactId) =>{
+            const token = localStorage.getItem('token')?.replace(/"/g,"");
+            try {
+              const response = await fetch(`http://localhost:8080/api/contacts/${contactId}`,
+                {
+                  method : 'PUT',
+                  headers : {
+                    'Content-Type' : 'application/json',
+                    Authorization : `Bearer ${token}`,          
+                   },
+                   body : JSON.stringify(updatedContact),
+                }
+              );
+
+              if (!response.ok) {
+                throw new Error('Failed to update contact');
+              };
+
+              const updatedData = await response.json();
+              console.log('Updated contact:', updatedData);
+
+
+              setContacts((prevContacts)=> prevContacts.map((contact)=>
+                contact._id === contactId ? {...contact, ...updatedContact} : contact
+              )
+            );
+
+            setEditingContactId(null);
+            toast.success('Contact updated successfull!')
+            } catch (error) {
+              toast.error('Error in updating the contact');
+            }
+          }
+
+
 
       //---------------------------------------- HANDLE DELETE FUNCTION ------------------------------------------
 
@@ -247,6 +313,7 @@ const Management = () => {
 
   return (
     <div className="container mx-auto mt-6 p-4 bg-[url('/Login.avif')] bg-cover min-h-screen">
+      <Navbar/>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -348,6 +415,7 @@ const Management = () => {
               <th className="py-2 px-4 text-left">Name</th>
               <th className="py-2 px-4 text-left">Email</th>
               <th className="py-2 px-4 text-left">Phone</th>
+              <th className="py-2 px-4 text-left">Edit</th>
               <th className="py-2 px-4 text-left">Actions</th>
             </tr>
           </thead>
@@ -355,9 +423,53 @@ const Management = () => {
             {contacts.length > 0 ? (
               contacts.map((contact) => (
                 <tr key={contact._id} className="border-b border-gray-500">
-                  <td className="py-2 px-4">{contact.name}</td>
-                  <td className="py-2 px-4">{contact.email}</td>
-                  <td className="py-2 px-4">{contact.number}</td>
+        <td className="py-2 px-4">
+          {editingContactId === contact._id ? (
+            <input
+              name="name"
+              value={updatedContact.name}
+              onChange={handleInputChange}
+              className="p-2 border rounded"
+            />
+          ) : (
+            contact.name
+          )}
+        </td>
+        <td className="py-2 px-4">
+          {editingContactId === contact._id ? (
+            <input
+              name="email"
+              value={updatedContact.email}
+              onChange={handleInputChange}
+              className="p-2 border rounded"
+            />
+          ) : (
+            contact.email
+          )}
+        </td>
+        <td className="py-2 px-4">
+          {editingContactId === contact._id ? (
+            <input
+              name="number"
+              value={updatedContact.number}
+              onChange={handleInputChange}
+              className="p-2 border rounded"
+            />
+          ) : (
+            contact.number
+          )}
+        </td>
+        <td className="py-2 px-4">
+          {editingContactId === contact._id ? (
+            <Button onClick={() => handleUpdate(contact._id)} variant="default">
+              Save
+            </Button>
+          ) : (
+            <Button onClick={() => handleEdit(contact)} variant="destructive">
+              Edit
+            </Button>
+          )}
+        </td>
                   <td className="py-2 px-4">
                     {role === "user" && (
                       <Button
