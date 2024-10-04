@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -133,13 +133,16 @@ const Login = () => {
           </Button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </form>
+        
 
         {/* //---------------------------------------- LINK SIGN  UP PAGE  ------------------------------------------ */}
 
-        <div className="mt-6 text-blue-500 text-center">
+        <div className="flex justify-between mt-6 text-blue-500 text-center ">
           <Link href="/signup">
-            <div className="hover:underline">Sign Up Here </div>
+            <div className="flex hover:underline ml-2">Sign Up Here </div>
           </Link>
+        <div className="flex hover:underline cursor-pointer"><Link href={'/forgot_password'}>Forgot Password?</Link></div>
+
         </div>
       </div>
     </div>

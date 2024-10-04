@@ -246,7 +246,7 @@ const Management = () => {
  }
 
   return (
-    <div className="container mx-auto p-4 bg-[url('/Login.avif')] bg-cover h-screen">
+    <div className="container mx-auto mt-6 p-4 bg-[url('/Login.avif')] bg-cover min-h-screen">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -341,7 +341,7 @@ const Management = () => {
   
   {/*------------------------------------------ TABLE DATA DISPLAY --------------------------------------- */}
 
-      <div className="overflow-x-auto mt-6">
+      <div className="overflow-x-auto mt-6 min-h-[200px]">
         <table className="min-w-full bg-white text-black table-auto">
           <thead className="bg-black text-white">
             <tr>
