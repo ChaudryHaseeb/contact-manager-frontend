@@ -49,7 +49,7 @@ const Login = () => {
         });
 
         setTimeout(() => {
-          router.push(result.user.role === "admin" ? "/admin" : "/addcontact");
+          router.push(result.user.role === "admin" ? "/route/admin/home" : "/route/user/home");
         }, 1000);
       } else {
         const result = await response.json();
@@ -138,10 +138,10 @@ const Login = () => {
         {/* //---------------------------------------- LINK SIGN  UP PAGE  ------------------------------------------ */}
 
         <div className="flex justify-between mt-6 text-blue-500 text-center ">
-          <Link href="/signup">
+          <Link href="/auth/signup">
             <div className="flex hover:underline ml-2">Sign Up Here </div>
           </Link>
-        <div className="flex hover:underline cursor-pointer"><Link href={'/forgot_password'}>Forgot Password?</Link></div>
+        <div className="flex hover:underline cursor-pointer"><Link href={'/auth/forgot_password'}>Forgot Password?</Link></div>
 
         </div>
       </div>

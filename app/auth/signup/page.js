@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox"
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { validatePassword } from "../components/ValidatePassword";
+import { validatePassword } from "../../auth/ValidatePassword";
 import Image from "next/image";
 
 export default function Signup() {
@@ -173,7 +173,7 @@ export default function Signup() {
         {/* //---------------------------------------- LINK LOGIN PAGE  ------------------------------------------ */}
 
         <div className="mt-6 text-blue-500 text-center">
-          <Link href="/login">
+          <Link href="/">
             <div className="hover:underline">Login Here </div>
           </Link>
         </div>

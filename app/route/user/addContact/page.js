@@ -23,7 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Navbar from "../components/Navbar";
+import Navbar from "@/components/layout/Navbar";
 
 const Management = () => {
 

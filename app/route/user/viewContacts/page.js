@@ -21,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Navbar from "../components/Navbar";
+import Navbar from "@/components/layout/Navbar";
 
 
 const Page = () => {
@@ -48,7 +48,7 @@ const Page = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/contacts/allcontacts?page=${pageNumber}&limit=${limit}`,
+        `http://localhost:8080/api/contacts?page=${pageNumber}&limit=${limit}`,
         {
           method: "GET",
           headers: {
@@ -93,7 +93,7 @@ const Page = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:8080/api/contacts/admin/${_id}`,
+          `http://localhost:8080/api/contacts/${_id}`,
           {
             method: "DELETE",
             headers: {
@@ -212,7 +212,7 @@ const Page = () => {
 
   return (
     <>
-      <Navbar/>
+    <Navbar/>
     <div className="container mx-auto p-4 bg-[url('/Admin-User-Management3.webp')] bg-cover bg-center min-h-screen">
       <div className="flex items-center justify-center">
         <h1 className="text-white text-3xl font-bold mt-16 mb-1">
@@ -242,7 +242,6 @@ const Page = () => {
               <th className="py-2 px-4 text-left">Name</th>
               <th className="py-2 px-4 text-left">Email</th>
               <th className="py-2 px-4 text-left">Phone</th>
-              <th className="py-2 px-4 text-left">User</th>
               <th className="py-2 px-4 text-left">Actions</th>
             </tr>
           </thead>
@@ -256,7 +255,6 @@ const Page = () => {
                   <td className="py-2 px-4">{contact.name}</td>
                   <td className="py-2 px-4">{contact.email}</td>
                   <td className="py-2 px-4">{contact.number}</td>
-                  <td className="py-2 px-4">{contact.user_id.username}</td>
                   <td className="py-2 px-4">
                     <Button
                       onClick={() => handleDelete(contact._id)}

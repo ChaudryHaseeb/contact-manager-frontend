@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Checkbox } from "@/components/ui/checkbox";
-import { validatePassword } from '../../components/ValidatePassword';
+import { validatePassword } from "../../../auth/ValidatePassword";
 
 const ResetPassword = () => {
     const { token } = useParams();
@@ -55,6 +55,7 @@ const ResetPassword = () => {
 
   return (
     <div className='flex flex-col justify-center items-center min-h-screen'>
+              
                <ToastContainer
         position="top-right"
         autoClose={1000}

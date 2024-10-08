@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@/components/ui/button";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
   Pagination,
   PaginationContent,
@@ -21,21 +21,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Navbar from "../components/Navbar";
+import Navbar from "@/components/layout/Navbar";
+
 
 const Page = () => {
 
-      //---------------------------------------- CONSTANTS DICLARAIION ------------------------------------------
+      //---------------------------------------- CONTANTS DICLARATION ------------------------------------------
 
-  const [users, setUsers] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [limit, setLimit] = useState(2); 
 
 
-      //---------------------------------------- FETCH  USER FUNCTION ------------------------------------------
+      //---------------------------------------- FETCH CONTANTS FUNCTION ------------------------------------------
 
-  const fetchUsers = async (pageNumber) => {
+  const fetchContacts = async (pageNumber) => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
     if (!token) {
       toast.error("You are not authorized. Please log in.");
@@ -47,7 +48,7 @@ const Page = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/user/allusers?page=${pageNumber}&limit=${limit}`,
+        `http://localhost:8080/api/contacts/allcontacts?page=${pageNumber}&limit=${limit}`,
         {
           method: "GET",
           headers: {
@@ -56,20 +57,21 @@ const Page = () => {
         }
       );
 
-      if (!response.ok) throw new Error("Failed to fetch users");
+      if (!response.ok) throw new Error("Failed to fetch contacts");
 
       const data = await response.json();
-      setUsers(data.users || []); 
+      setContacts(data.contacts || []);
       setTotalPages(data.totalPages || 1);
     } catch (error) {
-      toast.error(error.message || "Error fetching users");
+      toast.error(error.message || "Error fetching contacts");
     }
   };
 
       //---------------------------------------- USE EFFECT ------------------------------------------
 
+
   useEffect(() => {
-    fetchUsers(page, limit);
+    fetchContacts(page , limit);
   }, [page, limit]);
 
       //---------------------------------------- HANDLE LIMIT CHANGE FUNCTION ------------------------------------------
@@ -78,19 +80,20 @@ const Page = () => {
         setLimit(Number(event.target.value));
         setPage(1); // Reset to first page when the limit is changed
       };
-
+  
       //---------------------------------------- HANDLE DELETE FUNCTION ------------------------------------------
 
 
-  const handleDelete = async (user_Id) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
+  const handleDelete = async (_id) => {
+    if (window.confirm("Are you sure you want to delete this contact?")) {
       const token = localStorage.getItem("token")?.replace(/"/g, "");
+      // console.log("contact id---------", _id);
 
           //---------------------------------------- API Fetch DELETE ------------------------------------------
 
       try {
         const response = await fetch(
-          `http://localhost:8080/api/user/${user_Id}`,
+          `http://localhost:8080/api/contacts/admin/${_id}`,
           {
             method: "DELETE",
             headers: {
@@ -98,13 +101,13 @@ const Page = () => {
             },
           }
         );
-        // console.log("user id ==========", user_Id);
+        // console.log("contact id---------", _id);
+        if (!response.ok) throw new Error("Failed to delete contact");
 
-        if (!response.ok) throw new Error("Failed to delete user");
-        setUsers(users.filter((user) => user._id !== user_Id));
-        toast.success("User deleted successfully!");
+        setContacts(contacts.filter((contact) => contact._id !== _id));
+        toast.success("Contact deleted successfully!");
       } catch (error) {
-        toast.error(error.message || "Error deleting user");
+        toast.error(error.message || "Error deleting contact");
       }
     }
   };
@@ -121,7 +124,7 @@ const Page = () => {
     if (page > 1) setPage(page - 1);
   };
 
-   //--------------------------------------- CSV Function ---------------------------------------
+  //--------------------------------------- CSV Function ---------------------------------------
 
     //convert json data to csv formate
 
@@ -151,10 +154,10 @@ const Page = () => {
 
 
   const downloadCSV = () =>{
-      if (users.length === 0) {
+      if (contacts.length === 0) {
           toast.error('No Contacts')
       }
-      const csvData = convertToCSV(users);
+      const csvData = convertToCSV(contacts);
       const blob = new Blob([csvData],{type: "text/csv"});
       const url = window.URL.createObjectURL(blob);
 
@@ -170,93 +173,107 @@ const Page = () => {
   //---------------------------------------- DOWNLOAD PDF FUNCTION -------------------------------------------------
 
   const downloadPDF = () =>{
-    if(users.length === 0){
+    if(contacts.length === 0){
         toast.error('No Contacts')
     }
     const doc = new jsPDF();
 
     //title
     doc.setFontSize(18)
-    doc.text('Users List', 85, 20)
+    doc.text('Contacts List', 70, 20)
 
     let ypos = 40;
 
     //header
     doc.setFontSize(16);
     doc.text('Name', 25, ypos);
-    doc.text('Email', 80, ypos);
-    doc.text('Role', 150, ypos);
+    doc.text('Email', 60, ypos);
+    doc.text('Phone', 115, ypos);
+    doc.text('User', 160, ypos);
 
     ypos += 10;
 
     //body
-    users.forEach(user => {
+    contacts.forEach(contact => {
         doc.setFontSize(12)
-        doc.text(user.username, 20, ypos);
-        doc.text(user.email, 70, ypos);
-        doc.text(user.role, 150, ypos);
+        doc.text(contact.name, 20, ypos);
+        doc.text(contact.email, 50, ypos);
+        doc.text(contact.number, 115, ypos);
+        doc.text(contact.user_id.username, 160, ypos);
 
         doc.line(20,ypos + 2, 190, ypos + 2);
 
         ypos += 10;
     });
 
-    doc.save('users.pdf');
+    doc.save('contacts.pdf');
 
  }
 
   return (
     <>
-     <Navbar/>
+    <Navbar/>
     <div className="container mx-auto p-4 bg-[url('/Admin-User-Management3.webp')] bg-cover bg-center min-h-screen">
       <div className="flex items-center justify-center">
         <h1 className="text-white text-3xl font-bold mt-16 mb-1">
-          Users Management
+          Contact Management
         </h1>
       </div>
 
-           {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
+             {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
 
-           <DropdownMenu  >
-    <DropdownMenuTrigger className = 'flex ml-auto bg-white text-black rounded-sm p-2'>Download</DropdownMenuTrigger>
+             <DropdownMenu  >
+    <DropdownMenuTrigger className = 'flex ml-auto  bg-white text-black rounded-sm p-2'>Download</DropdownMenuTrigger>
     <DropdownMenuContent>
-      <DropdownMenuLabel>User's Download</DropdownMenuLabel>
+      <DropdownMenuLabel>Contact's Download</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem onClick = {downloadCSV} className='cursor-pointer hover:bg-slate-600'>CSV File</DropdownMenuItem>
       <DropdownMenuItem onClick = {downloadPDF} className='cursor-pointer hover:bg-slate-800'>PDF File</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 
-
       {/* //---------------------------------------- TABLE DATA DISPLAY ------------------------------------------ */}
 
 
       <div className="overflow-x-auto mt-6 min-h-[200px]">
-        <table className="min-w-full text-center text-black">
+        <table className="min-w-full bg-gray-800 text-black table-auto">
           <thead className="bg-black text-white">
             <tr>
-              <th className="py-2 px-4">Username</th>
-              <th className="py-2 px-4">Email</th>
-              <th className="py-2 px-4">Role</th>
-              <th className="py-2 px-4">Actions</th>
+              <th className="py-2 px-4 text-left">Name</th>
+              <th className="py-2 px-4 text-left">Email</th>
+              <th className="py-2 px-4 text-left">Phone</th>
+              <th className="py-2 px-4 text-left">User</th>
+              <th className="py-2 px-4 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user._id} className="border-b border-gray-500 bg-white">
-                <td className="py-2 px-4">{user.username}</td>
-                <td className="py-2 px-4">{user.email}</td>
-                <td className="py-2 px-4">{user.role}</td>
-                <td className="py-2 px-4">
-                  <Button
-                    onClick={() => handleDelete(user._id)}
-                    variant="destructive"
-                  >
-                    Delete
-                  </Button>
+            {contacts.length > 0 ? (
+              contacts.map((contact) => (
+                <tr
+                  key={contact._id}
+                  className="border-b bg-white border-gray-500"
+                >
+                  <td className="py-2 px-4">{contact.name}</td>
+                  <td className="py-2 px-4">{contact.email}</td>
+                  <td className="py-2 px-4">{contact.number}</td>
+                  <td className="py-2 px-4">{contact.user_id.username}</td>
+                  <td className="py-2 px-4">
+                    <Button
+                      onClick={() => handleDelete(contact._id)}
+                      variant="destructive"
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center py-4">
+                  No contacts found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -308,7 +325,7 @@ const Page = () => {
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
-            <PaginationEllipsis className={" text-white"} />
+            <PaginationEllipsis className={"text-white"} />
           </PaginationItem>
           <PaginationItem>
             <PaginationNext
@@ -318,6 +335,7 @@ const Page = () => {
           </PaginationItem>
         </PaginationContent>
         <span className="mt-2 ml-auto">{`Page ${page} of ${totalPages}`}</span>
+
       </Pagination>
     </div>
     </>
