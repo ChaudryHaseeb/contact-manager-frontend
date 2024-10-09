@@ -8,6 +8,8 @@ export default function UserTask() {
   const taskId = params.task;  
 
   const [task, setTask] = useState(null);
+  const [loading, setLoading] = useState(true); 
+
   console.log("task id------", taskId);
   useEffect(() => {
     const fetchTask = async () => {
@@ -28,17 +30,27 @@ export default function UserTask() {
             },
           }
         );
+        
         const data = await response.json();
-        setTask(data);
-        console.log("task:", task);
-      } catch (error) {
+
+        console.log('data---------------', data);
+
+        if (data) {
+            setTask(data);
+            setLoading(false);
+          }
+  
+
+    } catch (error) {
         console.error("Failed to load task data", error);
-      }
-    };
+        setLoading(false);
+    }
+};
 
-    fetchTask();
-  }, [taskId]);
+fetchTask();
+}, [taskId]);
 
+// console.log("task:----------------", task);
   const confirmCompletion = async () => {
     try {
       const token = localStorage.getItem("token")?.replace(/'/g, "");
@@ -58,6 +70,7 @@ export default function UserTask() {
       if (!response.ok) {
         console.error('response is not ok..')
       }
+      console.log('response-----------------',response)
 
       const data = await response.json();
       console.log('response data---------',data);
@@ -72,7 +85,8 @@ export default function UserTask() {
     }
   };
 
-  if (!task) return <div>Loading task...</div>;
+  if (loading) return <div>Loading task...</div>;
+  if (!task) return <div>Task not found</div>;
 
   return (
     <>
@@ -82,25 +96,22 @@ export default function UserTask() {
         <h2 className="text-2xl mb-6">Assigned Task</h2>
         <div className="bg-gray-100 p-4 rounded shadow-md mb-6 text-black">
           <p>
-            <strong>Description:</strong> {task.description}
+            <strong>Description:</strong> {task[0].description}
           </p>
-          {console.log("description------", task.description)}
           <p>
-            <strong>Hourly Rate:</strong> ${task.hourlyRate}
+            <strong>Hourly Rate:</strong> ${task[0].hourlyRate}
           </p>
-          {console.log("description------", task.hourlyRate)}
 
           <p>
-            <strong>Status:</strong> {task.status}
+            <strong>Status:</strong> {task[0].status}
           </p>
-          {console.log("description------", task.status)}
         </div>
         <button
           onClick={confirmCompletion}
           className="bg-green-600 text-white px-4 py-2 rounded"
-          disabled={task.completionConfirmedByUser}
+          disabled={task[0].completionConfirmedByUser}
         >
-          {task.completionConfirmedByUser
+          {task[0].completionConfirmedByUser
             ? "Task Completed"
             : "Confirm Task Completion"}
         </button>

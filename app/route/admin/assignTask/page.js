@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CustomSelect from "@/components/hook/SelectHook";
 
 export default function AssignTask() {
   const [description, setDescription] = useState("");
@@ -71,13 +72,14 @@ export default function AssignTask() {
         </div>
         <div className="mb-4">
           <label className="block mb-2">Assign To (User ID):</label>
-          <input
+          {/* <input
             type="text"
             value={assignedTo}
             onChange={(e) => setAssignedTo(e.target.value)}
             className="border p-2 w-full text-black"
             required
-          />
+          /> */}
+          <CustomSelect onChange={(selectedUserId) => setAssignedTo(selectedUserId)}/>
         </div>
         <div className="mb-4">
           <label className="block mb-2">Hourly Rate:</label>

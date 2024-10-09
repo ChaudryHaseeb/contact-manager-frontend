@@ -8,9 +8,44 @@ import { Button } from "@/components/ui/button";
 
 const Admin = () => {
     const router = useRouter();
-    const [taskId, setTaskId] = useState("6703cac6210eb24a5730c43a"); // Replace with your actual logic to get taskId
-    const handleLinkClick = () => {
-        router.push(`/route/user/viewTask/${taskId}`);
+    const [taskId, setTaskId] = useState(null);
+
+    useEffect(() => {
+        const fetchTask = async () => {
+          const token = localStorage.getItem("token")?.replace(/'/g, "");
+          if (!token) {
+            console.error("Token not found");
+            return;
+          }
+    
+          try {
+            const response = await fetch(
+              `http://localhost:8080/api/task/${taskId}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            const data = await response.json();
+            if (data && data.taskId) {
+                setTaskId(data.taskId); // Dynamically set the task ID
+              }
+          } catch (error) {
+            console.error("Failed to load task data", error);
+          }
+        };
+    
+        fetchTask();
+      }, [taskId]);
+      const handleLinkClick = () => {
+        if (taskId) {
+          router.push(`/route/user/viewTask/${taskId}`);
+        } else {
+          alert("Task ID is not available");
+        }
       };
   return (
 
