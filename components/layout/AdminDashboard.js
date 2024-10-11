@@ -1,26 +1,29 @@
-'using client'
-// import axios from "axios";
-// import { useState, useEffect } from "react";
+'use client'
+import React, { useState, useEffect } from 'react';
+import ApiService from '../../app/config/service/apiConfig';
 
 export default function AdminDashboard() {
-//   const [dashboardData, setDashboardData] = useState(null);
+  const [tasks, setTasks] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [totalPaid, setTotalPaid] = useState(0);
+  const [totalUnPaid, setTotalUnpaid] = useState(0);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const {task, TotalAmount, TotalAmountPaid, TotalAmountUnpaid} = await ApiService.getTasksWithPaymentStatus();
+        setTasks(task);
+        setTotal(TotalAmount);
+        setTotalPaid(TotalAmountPaid);
+        setTotalUnpaid(TotalAmountUnpaid)
+        // console.log('TotalAmount---------------',TotalAmount)
+      } catch (error) {
+        console.error('Error fetching tasks with payment status:', error);
+      }
+    };
 
-//   useEffect(() => {
-//     const fetchDashboardData = async () => {
-//       try {
-//         const { data } = await axios.get("/api/dashboard"); // Fetch data from your backend
-//         setDashboardData(data);
-//       } catch (error) {
-//         console.error("Failed to load dashboard data", error);
-//       }
-//     };
+    fetchTasks();
+  }, []);
 
-//     fetchDashboardData();
-//   }, []);
-
-//   if (!dashboardData) {
-//     return <div className="text-center py-8">Loading...</div>;
-//   }
 
   return (
     <div className="mx-auto align-middle p-8 min-h-screen">
@@ -47,8 +50,10 @@ export default function AdminDashboard() {
                 {/* Total Pay Amount */}
 
         <div className="bg-white shadow-lg rounded-lg p-6 text-black">
-          <h3 className="text-lg font-semibold">Total Pay Amount</h3>
-          <p className="text-4xl mt-4 text-blue-950">Dashboard Data Total Pay Amount</p>
+          <h3 className="text-lg font-semibold">Amount Detail's</h3>
+          <p className="text-4xl mt-4 text-blue-950">Total Amount: ${total}</p>
+          <p className="text-4xl mt-4 text-[#00ae0c]">Total Paid: ${totalPaid}</p>
+          <p className="text-4xl mt-4 text-[#f60000]">Total Unpaid: ${totalUnPaid}</p>
         </div>
       </div>
 

@@ -1,55 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+
 
 const Admin = () => {
-    const router = useRouter();
-    const [taskId, setTaskId] = useState(null);
-
-    useEffect(() => {
-        const fetchTask = async () => {
-          const token = localStorage.getItem("token")?.replace(/'/g, "");
-          if (!token) {
-            console.error("Token not found");
-            return;
-          }
-    
-          try {
-            const response = await fetch(
-              `http://localhost:8080/api/task/${taskId}`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-            const data = await response.json();
-            if (data && data.taskId) {
-                setTaskId(data.taskId); // Dynamically set the task ID
-              }
-          } catch (error) {
-            console.error("Failed to load task data", error);
-          }
-        };
-    
-        fetchTask();
-      }, [taskId]);
-      const handleLinkClick = () => {
-        if (taskId) {
-          router.push(`/route/user/viewTask/${taskId}`);
-        } else {
-          alert("Task ID is not available");
-        }
-      };
   return (
-
-  
     <div>
         <Navbar/>
       <section className="text-gray-300 body-font bg-[url('/admin3.avif')] bg-cover ">
@@ -155,7 +111,7 @@ const Admin = () => {
               <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col">
                 <div className="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full  text-indigo-500 flex-shrink-0">
                   <Image
-                    src="/Admin-Contacts-Gradient.gif"
+                    src="/Computer-Display-Gradient.gif"
                     alt="Logo"
                     unoptimized
                     width={80}
@@ -169,12 +125,9 @@ const Admin = () => {
                   <p className="leading-relaxed text-base text-gray-400">
                     "View Your All Tasks Here And  Manage Them For Optimal Organization."
                   </p>
-                    <Button onClick={handleLinkClick} className='bg-slate-700 mt-4'>
-                            Show Task
-                    </Button>
-                  {/* <Link
+                  <Link
                     className="mt-3 text-indigo-600 inline-flex items-center"
-                    
+                    href={'/route/user/userTasks'}
                   >
                     Show My Task's
                     <svg
@@ -188,7 +141,45 @@ const Admin = () => {
                     >
                       <path d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
-                  </Link> */}
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 lg:w-1/2 md:w-full">
+              <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col">
+                <div className="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full  text-indigo-500 flex-shrink-0">
+                  <Image
+                    src="/Growth-Gradient2.gif"
+                    alt="Logo"
+                    unoptimized
+                    width={80}
+                    height={70}
+                    />
+                </div>
+                <div className="flex-grow">
+                  <h2 className="text-white text-lg title-font font-medium mb-3">
+                    Earning Detail's
+                  </h2>
+                  <p className="leading-relaxed text-base text-gray-400">
+                    "View Your All Tasks Here And  Manage Them For Optimal Organization."
+                  </p>
+                  <Link
+                    className="mt-3 text-indigo-600 inline-flex items-center"
+                    href={'/route/user/viewEarnAmount'}
+                  >
+                    Show My Earn Amount
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 ml-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                  </Link>
                 </div>
               </div>
             </div>

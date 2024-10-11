@@ -26,7 +26,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    router.push("/login");
+    router.push("/");
   };
 
       //---------------------------------------- CHECK LOGIN STATUS FUNCTION ------------------------------------------
@@ -116,7 +116,7 @@ const Navbar = () => {
       {/* //---------------------------------------- CHECKING CONDITION ------------------------------------------ */}
 
       <div className="cart absolute right-0 top-5 mx-6 cursor-pointer flex">
-        <Link href={isLoggedIn ? "/" : "/login"}>
+        <Link href={ "/"}>
           {isLoggedIn ? (
             <Button onClick={handleLogout} variant="destructive">
               Logout
