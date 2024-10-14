@@ -63,7 +63,7 @@ const CustomSelect = ({onChange}) => {
 
  const  nameOptions = User.map((user) => ({
     value : user._id,
-    label : user._id
+    label : user.username && user.email
  }))
 
  const handleSelectChange = (selectOption) =>{

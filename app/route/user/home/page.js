@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
+import UserPaymentCard from "@/components/card/UserPaymentCard";
+import UserTaskCard from "@/components/card/UserTaskCard";
 
 
 const Admin = () => {
@@ -9,11 +11,11 @@ const Admin = () => {
     <div>
         <Navbar/>
       <section className="text-gray-300 body-font [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] bg-cover ">
-        <div className="container px-5 py-24 mx-auto flex flex-wrap">
-          <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center mx-auto">
+        <div className="container px-5 py-20 mx-auto flex flex-wrap">
+          <div className="flex flex-wrap w-full mb-10 flex-col items-center text-center mx-auto">
             <div className="flex items-center ">
-              <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
-                 Contact Manager
+              <h1 className="sm:text-4xl text-2xl title-font mb-2 text-white font-bold">
+                  Contact Manager
               </h1>
               <Image
                 src="/Layers-Gradient.gif"
@@ -29,6 +31,25 @@ const Admin = () => {
               efficient your oversight."
             </p>
           </div>
+          <div className=" min-h-screen mb-18">
+                  <h2 className="text-2xl font-semibold mb-8 ml-8">User Dashboard</h2>
+            <div className="flex">
+                <div className="flex-row ml-24"><UserPaymentCard/></div>
+                <div className="flex-row ml-10"><UserTaskCard/></div>
+            </div>
+
+            </div>
+            <div className="flex items-center mx-auto mb-16">
+                <h2 className="text-3xl font-bold text-white">User Controller's</h2>
+                <Image
+                src="/Layers-Gradient.gif"
+                alt="Pencil Gif"
+                unoptimized
+                width={55}
+                height={55}
+                className="object-contain pb-2 ml-3"
+              />
+            </div>
           <div className="flex flex-wrap -m-4">
             <div className="p-4 lg:w-1/2 md:w-full">
               <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col">

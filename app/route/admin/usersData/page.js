@@ -30,7 +30,7 @@ const Page = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [limit, setLimit] = useState(2); 
+  const [limit, setLimit] = useState(5);
 
 
       //---------------------------------------- FETCH  USER FUNCTION ------------------------------------------
@@ -287,8 +287,8 @@ const Page = () => {
           value={limit}
           onChange={handleLimitChange}
         >
-          <option value={2}>2</option>
           <option value={5}>5</option>
+          <option value={8}>8</option>
           <option value={10}>10</option>
         </select>
       </div>

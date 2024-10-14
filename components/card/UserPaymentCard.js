@@ -7,7 +7,7 @@ import { ChartContainer } from "@/components//ui/chart"
 import { Separator } from "@/components//ui/separator"
 
 
-export default function CardPaymentDetails() {
+export default function UserPaymentCard() {
     const [tasks, setTasks] = useState([]);
     const [total, setTotal] = useState(0);
     const [totalPaid, setTotalPaid] = useState(0);
@@ -28,14 +28,15 @@ export default function CardPaymentDetails() {
       fetchTasks();
     }, []);
   return (
+    <>
     <Card className="max-w-fit w-[500px] h-[400px] bg-[#2b1d35] text-white cursor-pointer border border-[#bc63ff] border-none">
       <CardContent className="flex gap-4 p-4">
         <div className="grid items-center gap-2">
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm text-muted-foreground">Total Amount</div>
+            <div className="text-sm ">Total Earnings</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {total}
-              <span className="text-sm font-normal text-muted-foreground ">
+              <span className="text-sm font-normal ">
                 $
               </span>
             </div>
@@ -43,10 +44,10 @@ export default function CardPaymentDetails() {
           <Separator orientation="row" className="mx-2 w-px" />
 
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm text-muted-foreground">Paid Amount</div>
+            <div className="text-sm">Received Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {totalPaid}
-              <span className="text-sm font-normal text-muted-foreground ">
+              <span className="text-sm font-normal  ">
                 $
               </span>
             </div>
@@ -54,10 +55,10 @@ export default function CardPaymentDetails() {
           <Separator orientation="row" className="mx-2 w-px" />
 
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm text-muted-foreground">Unpaid Amount</div>
+            <div className="text-sm ">Remaining Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {totalUnPaid}
-              <span className="text-sm font-normal text-muted-foreground ">
+              <span className="text-sm font-normal ">
                 $
               </span>
             </div>
@@ -65,16 +66,16 @@ export default function CardPaymentDetails() {
         </div>
         <ChartContainer
           config={{
-            TotalAmount: {
-              label: "Total Amount",
+            TotalEarnings: {
+              label: "Total Earnings",
               color: "hsl(var(--chart-1))",
             },
-            PaidAmount: {
-              label: "Paid Amount",
+            ReceivedAmount: {
+              label: "Received Amount",
               color: "hsl(var(--chart-2))",
             },
-            UnpaidAmount: {
-              label: "Unpaid Amountnd",
+            RemainingAmount: {
+              label: "Remaining Amount",
               color: "hsl(var(--chart-3))",
             },
           }}
@@ -89,17 +90,17 @@ export default function CardPaymentDetails() {
             }}
             data={[
               {
-                activity:"Total Amount",
+                activity:"Total Earnings",
                 value: 100,
                 fill: "#9d3c8f",
               },
               {
-                activity: "Paid Amount",
+                activity: "Received Amount",
                 value: (totalPaid / total) * 100,
                 fill:  "#bc63ff",
               },
               {
-                activity: "Unpaid Amountnd",
+                activity: "Remaining Amount",
                 value: (totalUnPaid / total) * 100,
                 fill:  "#9d3c8f",
               },
@@ -121,5 +122,6 @@ export default function CardPaymentDetails() {
         </ChartContainer>
       </CardContent>
     </Card>
+    </>
   )
 }

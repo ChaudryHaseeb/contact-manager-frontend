@@ -40,7 +40,7 @@ const Management = () => {
   const [role, setRole] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [limit, setLimit] = useState(2); 
+  const [limit, setLimit] = useState(5);
   const [editingContactId, setEditingContactId] = useState(null);
   const [updatedContact, setUpdatedContact] = useState({
     name : '',
@@ -155,9 +155,9 @@ const Management = () => {
                   method : 'PUT',
                   headers : {
                     'Content-Type' : 'application/json',
-                    Authorization : `Bearer ${token}`,          
-                   },
-                   body : JSON.stringify(updatedContact),
+                    Authorization : `Bearer ${token}`,
+                  },
+                  body : JSON.stringify(updatedContact),
                 }
               );
 
@@ -495,9 +495,9 @@ const Management = () => {
 
       {/*------------------------------------------- Pagination ---------------------------------------*/}
 
-               {/*-------------------------------- Limit Dropdown ----------------------------*/}
+              {/*-------------------------------- Limit Dropdown ----------------------------*/}
 
-               
+
 
       <Pagination className="flex justify-center items-center mt-10 gap-72">
       <div className="flex justify-center items-center">
@@ -508,8 +508,8 @@ const Management = () => {
           value={limit}
           onChange={handleLimitChange}
         >
-          <option value={2}>2</option>
           <option value={5}>5</option>
+          <option value={8}>8</option>
           <option value={10}>10</option>
         </select>
       </div>
@@ -525,7 +525,7 @@ const Management = () => {
               isActive
               className="bg-white text-black hover:bg-black hover:text-white"
             >
-             {page}
+              {page}
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>

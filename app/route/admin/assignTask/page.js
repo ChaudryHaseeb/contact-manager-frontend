@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CustomSelect from "@/components/hook/SelectHook";
 
+
 export default function AssignTask() {
   const [description, setDescription] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
@@ -34,9 +35,14 @@ export default function AssignTask() {
       if(!response.ok){
         throw new Error('Response is not ok');
       };
-      alert("Task assigned successfully!");
+      toast.success("Task assigned successfully!");
+
+      setDescription("");
+      setAssignedTo("");
+      setHourlyRate("");
+
     } catch (error) {
-      console.error("Failed to assign task", error);
+      toast.error("Failed to assign task");
     }
   };
 
