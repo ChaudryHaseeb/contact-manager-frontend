@@ -1,6 +1,5 @@
 'use client'
 import { useState } from "react";
-// import axios from "axios";
 import Navbar from "@/components/layout/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,11 +12,9 @@ export default function AssignTask() {
 
   const handleSubmit = async (e) => {
     const token = localStorage.getItem('token')?.replace(/"/g,'');
-    // const role = localStorage.getItem('role');
     if (!token) {
         toast.error("You are not authorized. Please log in.");
         return;
-  
       }
     e.preventDefault();
     try {
@@ -32,7 +29,7 @@ export default function AssignTask() {
             assignedTo,
             hourlyRate,
         })
-        
+
       });
       if(!response.ok){
         throw new Error('Response is not ok');
@@ -72,13 +69,6 @@ export default function AssignTask() {
         </div>
         <div className="mb-4">
           <label className="block mb-2">Assign To (User ID):</label>
-          {/* <input
-            type="text"
-            value={assignedTo}
-            onChange={(e) => setAssignedTo(e.target.value)}
-            className="border p-2 w-full text-black"
-            required
-          /> */}
           <CustomSelect onChange={(selectedUserId) => setAssignedTo(selectedUserId)}/>
         </div>
         <div className="mb-4">

@@ -1,103 +1,59 @@
-"use client"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import ApiService from '../config/service/apiConfig';
+import { useState, useEffect } from 'react';
 
-import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, XAxis, YAxis } from "recharts"
+export default function DesktopMobileChart() {
+  const [chartData, setChartData] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { allUsers } = await ApiService.getUsers();
+        
+        const totalUsernames = allUsers.reduce((acc, user) => acc + (user.username ? 1 : 0), 0);
+        const totalEmails = allUsers.reduce((acc, user) => acc + (user.email ? 1 : 0), 0);
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+        const dataForChart = [
+          { name: 'Usernames', count: totalUsernames },
+          { name: 'Emails', count: totalEmails },
+        ];
 
-export const description = "A mixed bar chart"
+        setChartData(dataForChart);
 
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
-]
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
-  },
-} satisfies ChartConfig
-
-export function Component() {
+    fetchData();
+  }, []);
+  
   return (
-    <Card>
+    <Card className="w-full h-full shadow-md rounded-lg overflow-hidden">
       <CardHeader>
-        <CardTitle>Bar Chart - Mixed</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle className="text-lg font-semibold text-gray-800">Usernames & Emails</CardTitle>
+        <CardDescription className="text-sm text-gray-500">Comparison of users with usernames and emails.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            layout="vertical"
-            margin={{
-              left: 0,
-            }}
-          >
-            <YAxis
-              dataKey="browser"
-              type="category"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) =>
-                chartConfig[value as keyof typeof chartConfig]?.label
-              }
-            />
-            <XAxis dataKey="visitors" type="number" hide />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar dataKey="visitors" layout="vertical" radius={5} />
-          </BarChart>
-        </ChartContainer>
+        <div className="h-72 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#6b7280' }} />
+              <YAxis tick={{ fontSize: 12, fill: '#6b7280' }} />
+              <Tooltip contentStyle={{ backgroundColor: '#f3f4f6', borderColor: '#d1d5db' }} cursor={{ fill: 'rgba(156, 163, 175, 0.1)' }} />
+              <Bar dataKey="count" fill="url(#dataGradient)" radius={[4, 4, 0, 0]} />
+              <defs>
+                <linearGradient id="dataGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#4f46e5" stopOpacity={0.8} />
+                  <stop offset="100%" stopColor="#6366f1" stopOpacity={0.6} />
+                </linearGradient>
+              </defs>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
-  )
+  );
 }

@@ -91,6 +91,17 @@ const ApiService = {
     },
 
 
+    getUsers: async () => {
+        try {
+            const response = await api.get('/user/allusers');
+            return response.data;
+        } catch (error) {
+            console.error('Error calculating payment', error);
+            throw error;
+        };
+    },
+
+
 };
 
 export default ApiService;

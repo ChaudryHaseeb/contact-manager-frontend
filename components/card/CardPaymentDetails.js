@@ -4,6 +4,8 @@ import ApiService from '../../app/config/service/apiConfig';
 import { PolarAngleAxis, RadialBar, RadialBarChart } from "recharts"
 import { Card, CardContent } from "@/components//ui/card"
 import { ChartContainer } from "@/components//ui/chart"
+import { Separator } from "@/components//ui/separator"
+
 
 export default function CardPaymentDetails() {
     const [tasks, setTasks] = useState([]);
@@ -27,32 +29,36 @@ export default function CardPaymentDetails() {
       fetchTasks();
     }, []);
   return (
-    <Card className="max-w-fit">
+    <Card className="max-w-fit w-[500px] h-[400px] bg-[#2b1d35] text-white cursor-pointer border border-[#bc63ff] border-none">
       <CardContent className="flex gap-4 p-4">
         <div className="grid items-center gap-2">
           <div className="grid flex-1 auto-rows-min gap-0.5">
             <div className="text-sm text-muted-foreground">Total Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {total}
-              <span className="text-sm font-normal text-muted-foreground text-[#0f0fff]">
+              <span className="text-sm font-normal text-muted-foreground ">
                 $
               </span>
             </div>
           </div>
+          <Separator orientation="row" className="mx-2 w-px" />
+
           <div className="grid flex-1 auto-rows-min gap-0.5">
             <div className="text-sm text-muted-foreground">Paid Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {totalPaid}
-              <span className="text-sm font-normal text-muted-foreground text-[#54ff0f]">
+              <span className="text-sm font-normal text-muted-foreground ">
                 $
               </span>
             </div>
           </div>
+          <Separator orientation="row" className="mx-2 w-px" />
+
           <div className="grid flex-1 auto-rows-min gap-0.5">
             <div className="text-sm text-muted-foreground">Unpaid Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {totalUnPaid}
-              <span className="text-sm font-normal text-muted-foreground text-[#ff0f0f]">
+              <span className="text-sm font-normal text-muted-foreground ">
                 $
               </span>
             </div>
@@ -77,41 +83,41 @@ export default function CardPaymentDetails() {
         >
           <RadialBarChart
             margin={{
-              left: -10,
-              right: -10,
-              top: -10,
-              bottom: -10,
+              left: -1,
+              right: -1,
+              top: -1,
+              bottom: -1,
             }}
             data={[
               {
                 activity:"Total Amount",
                 value: 100,
-                fill: "#0f0fff",
+                fill: "#9d3c8f",
               },
               {
                 activity: "Paid Amount",
                 value: (totalPaid / total) * 100,
-                fill: "#54ff0f",
+                fill:  "#bc63ff",
               },
               {
                 activity: "Unpaid Amountnd",
                 value: (totalUnPaid / total) * 100,
-                fill: "#ff0f0f",
+                fill:  "#9d3c8f",
               },
             ]}
             innerRadius="20%"
-            barSize={24}
-            startAngle={90}
-            endAngle={450}
+            barSize={28}
+            startAngle={120}
+            endAngle={340}
           >
             <PolarAngleAxis
               type="number"
               domain={[0, Math.max(total, totalPaid, totalUnPaid)]}
               dataKey="value"
-              stroke="#022931"
+              stroke=""
               tick={false}
             />
-            <RadialBar dataKey="value" background={{ fill: "#022931" }}  cornerRadius={5} />
+            <RadialBar dataKey="value" background={{ fill: "#5a004d" }}  cornerRadius={5} />
           </RadialBarChart>
         </ChartContainer>
       </CardContent>

@@ -8,7 +8,7 @@ const Admin = () => {
   return (
     <div>
         <Navbar/>
-      <section className="text-gray-300 body-font bg-[url('/admin3.avif')] bg-cover ">
+      <section className="text-gray-300 body-font [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] bg-cover ">
         <div className="container px-5 py-24 mx-auto flex flex-wrap">
           <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center mx-auto">
             <div className="flex items-center ">

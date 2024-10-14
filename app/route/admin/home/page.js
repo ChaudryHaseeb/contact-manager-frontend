@@ -3,17 +3,16 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
-// import AdminDashboard from "../../../../components/layout/AdminDashboard";
-// import Component from "@/app/demoFiles/demoCard";
 import CardPaymentDetails from "@/components/card/CardPaymentDetails";
-import CardTaskDetails from "@/components/card/CardTaskDetails";
+import CardTask from "@/components/card/CardTaskDetails";
+import DesktopMobileChart from "@/app/demoFiles/demoCharts";
 
 const Admin = () => {
   return (
 
     <div>
         <Navbar/>
-      <section className="text-gray-400 body-font bg-[url('/admin3.avif')] bg-cover ">
+      <section className="text-gray-400 body-font [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] bg-cover ">
         <div className="container px-5 py-24 mx-auto flex flex-wrap">
           <div className="flex flex-wrap w-full mb-6 flex-col items-center text-center mx-auto">
             <div className="flex items-center ">
@@ -34,15 +33,34 @@ const Admin = () => {
               efficient admin oversight."
             </p>
           </div>
-          <div className=" p-8 min-h-screen">
-               <h2 className="text-3xl font-semibold mb-8">Admin Dashboard</h2>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="flex-row"><CardPaymentDetails/></div>
-                <div className="flex-row "><CardTaskDetails/></div>
-                </div>
-               
+          <div className=" p-8 min-h-screen mb-24">
+                  <h2 className="text-3xl font-semibold mb-8">Admin Dashboard</h2>
+            <div className="flex md:grid-cols-3 gap-x-28">
+                <div className="flex-row "><CardPaymentDetails/></div>
+                <div className="flex-row"><CardTask/></div>
             </div>
-          
+
+            </div>
+            <div className="flex flex-wrap w-full mb-6 flex-col items-center text-center mx-auto">
+            <div className="flex items-center ">
+              <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
+                Admin Contact Controller's
+              </h1>
+              <Image
+                src="/Layers-Gradient.gif"
+                alt="Pencil Gif"
+                unoptimized
+                width={55}
+                height={55}
+                className="object-contain pb-2 ml-3"
+              />
+            </div>
+            <p className="lg:w-1/2 w-full leading-relaxed text-gray-400">
+              "Take control of your contacts with advanced features designed for
+              efficient admin oversight."
+            </p>
+          </div>
+
           <div className="flex flex-wrap -m-4">
             <div className="p-4 lg:w-1/2 md:w-full">
               <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col">
