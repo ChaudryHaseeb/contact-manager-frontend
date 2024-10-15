@@ -50,7 +50,7 @@ export default function AssignTask() {
     <>
     <Navbar/>
 
-    <div className="p-8 max-w-lg mx-auto mt-16">
+    <div className="p-8 max-w-4xl mx-auto mt-16">
     <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -62,14 +62,14 @@ export default function AssignTask() {
         draggable
         pauseOnHover
       />
-      <h2 className="text-2xl mb-6">Assign Task to User</h2>
+      <h2 className="text-5xl ml-36 mb-12 font-semibold">Assign Task to User</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block mb-2">Task Description:</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="border p-2 w-full text-black"
+            className="border rounded-md p-3 w-full text-black"
             required
           />
         </div>
@@ -83,7 +83,7 @@ export default function AssignTask() {
             type="number"
             value={hourlyRate}
             onChange={(e) => setHourlyRate(e.target.value)}
-            className="border p-2 w-full text-black"
+            className="border rounded-md p-2 w-full text-black"
             required
           />
         </div>

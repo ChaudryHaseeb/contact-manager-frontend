@@ -61,12 +61,13 @@ const confirmPayment=async(taskId) => {
         draggable
         pauseOnHover
       />
-      <div className="p-8 max-w-lg mx-auto mt-28 mb-36">
-        <h2 className="text-2xl mb-6">Assigned Tasks</h2>
+      <div className="p-8 w-full mx-auto mt-14 mb-36">
+        <h2 className="text-5xl mb-12 font-semibold ml-96">Assigned Tasks</h2>
+        <div className="grid grid-cols-2 gap-4">
 
         {tasks.length > 0 ? (
           tasks.map((task) => (
-            <div key={task._id} className="bg-gray-100 p-4 rounded shadow-md mb-6 text-black">
+            <div key={task._id} className="bg-gray-100 p-4 rounded text-lg shadow-md mb-6 text-black">
               <p><strong>Assigned To:</strong> {task.assignedTo}</p>
               <p><strong>Description:</strong> {task.description}</p>
               <p><strong>Hourly Rate:</strong> ${task.hourlyRate}</p>
@@ -87,6 +88,7 @@ const confirmPayment=async(taskId) => {
         ) : (
           <p>No tasks found.</p>
         )}
+        </div>
       </div>
     </>
   );

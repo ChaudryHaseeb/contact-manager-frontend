@@ -10,11 +10,7 @@ const Checkbox = ({ children, ...props }) => (
 );
 
 const CustomSelect = ({onChange}) => {
-  const [isClearable, setIsClearable] = useState(true);
   const [isSearchable, setIsSearchable] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRtl, setIsRtl] = useState(false);
 
 
   const [Role, setRole] = useState(null);
@@ -71,10 +67,6 @@ return   onChange(selectOption ? selectOption.value : selectOption.value);
         className="basic-single text-black"
         classNamePrefix="select"
         defaultValue={nameOptions[0]}
-        isDisabled={isDisabled}
-        isLoading={isLoading}
-        isClearable={isClearable}
-        isRtl={isRtl}
         isSearchable={isSearchable}
         name="color"
         options={nameOptions}
@@ -90,33 +82,14 @@ return   onChange(selectOption ? selectOption.value : selectOption.value);
           marginTop: '1em',
         }}
       >
-        <Checkbox
-          checked={isClearable}
-          onChange={() => setIsClearable((state) => !state)}
-        >
-          Clearable
-        </Checkbox>
+
         <Checkbox
           checked={isSearchable}
           onChange={() => setIsSearchable((state) => !state)}
         >
           Searchable
         </Checkbox>
-        <Checkbox
-          checked={isDisabled}
-          onChange={() => setIsDisabled((state) => !state)}
-        >
-          Disabled
-        </Checkbox>
-        <Checkbox
-          checked={isLoading}
-          onChange={() => setIsLoading((state) => !state)}
-        >
-          Loading
-        </Checkbox>
-        <Checkbox checked={isRtl} onChange={() => setIsRtl((state) => !state)}>
-          RTL
-        </Checkbox>
+
       </div>
     </>
   );

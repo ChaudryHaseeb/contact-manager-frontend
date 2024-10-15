@@ -37,6 +37,7 @@ const ViewAmount = () => {
           <tr className="border-b border-t text-center text-[#ffd800]">
             <th className="text-center p-4 border-x-2 ">Task Description</th>
             <th className="text-center p-4 border-x-2">Hourly Rate</th>
+            <th className="text-center p-4 border-x-2">Status</th>
             <th className="text-center p-4 border-x-2">Payment Status</th>
             <th className="text-center p-4 border-x-2">Amount Paid</th>
           </tr>
@@ -46,6 +47,7 @@ const ViewAmount = () => {
             <tr key={task._id} className="border-b border-x-2">
               <td className="p-4 border-x-2 text-[#3bde46]">{task.description}</td>
               <td className="p-4 text-center border-x-2">${task.hourlyRate}</td>
+              <td className={`p-4 text-center border-x-2 ${task.status === 'complete' ? 'text-[#00ae0c]' : 'text-[#f60000]'}`}>{task.status}</td>
               <td className={`p-4 text-center border-x-2 ${task.paymentStatus === 'paid' ? 'text-[#00ae0c]' : 'text-[#f60000]'}`}>{task.paymentStatus}</td>
               <td className="p-4 text-center border-x-2">${task.amountPaid}</td>
             </tr>

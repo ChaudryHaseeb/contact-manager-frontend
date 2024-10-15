@@ -79,12 +79,13 @@ const UserTasks = () => {
         draggable
         pauseOnHover
       />
-      <div className="p-8 max-w-lg mx-auto mt-28 mb-36">
-        <h2 className="text-2xl mb-6">Assigned Tasks</h2>
+      <div className="p-8 w-full mt-12 mb-36 ">
+        <h2 className=" text-5xl mb-8 ml-96 font-semibold">Assigned Tasks</h2>
+        <div className="grid grid-cols-2 gap-2">
 
         {tasks.length > 0 ? (
           tasks.map((task) => (
-            <div key={task._id} className="bg-gray-100 p-4 rounded shadow-md mb-6 text-black">
+            <div key={task._id} className="bg-gray-100 p-4 rounded shadow-md text-lg mb-6 text-black">
               <p><strong>Assigned To:</strong> {task.assignedTo.username} ({task.assignedTo.email})</p>
               <p><strong>Description:</strong> {task.description}</p>
               <p><strong>Hourly Rate:</strong> ${task.hourlyRate}</p>
@@ -115,6 +116,7 @@ const UserTasks = () => {
         ) : (
           <p>No tasks found.</p>
         )}
+        </div>
       </div>
     </>
   );

@@ -202,7 +202,6 @@ const Management = () => {
             },
           }
         );
-        // console.log('contact id-------',_id)
         if (!response.ok) throw new Error("Failed to delete contact");
 
         setContacts(contacts.filter((contact) => contact._id !== _id));
@@ -344,17 +343,17 @@ const Management = () => {
 
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center text-black">
           <input
             {...register("name", { required: "Name is required" })}
             placeholder="Name"
             className="p-2 border rounded w-1/2"
           />
           {errors.name && (
-            <span className="text-red-500">{errors.name.message}</span>
+            <span className="text-red-500 ml-4">{errors.name.message}</span>
           )}
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center text-black">
           <input
             {...register("email", {
               required: "Email is required",
@@ -367,17 +366,22 @@ const Management = () => {
             className="p-2 border rounded w-1/2"
           />
           {errors.email && (
-            <span className="text-red-500">{errors.email.message}</span>
+            <span className="text-red-500 ml-4">{errors.email.message}</span>
           )}
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center text-black">
           <input
-            {...register("number", { required: "Number is required" })}
+            {...register("number", { required: "Number is required" ,
+              pattern:{
+                value: /^\d{11}$/,
+                message: "Invalid number format"
+              }
+            })}
             placeholder="Number"
             className="p-2 border rounded w-1/2"
           />
           {errors.number && (
-            <span className="text-red-500">{errors.number.message}</span>
+            <span className="text-red-500 ml-4">{errors.number.message}</span>
           )}
         </div>
         <div className="flex items-center justify-center">
