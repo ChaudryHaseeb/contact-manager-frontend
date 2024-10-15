@@ -79,7 +79,7 @@ const Admin = () => {
                     the insights they need to succeed."
                   </p>
                   <Link
-                    className="mt-3 text-indigo-500 inline-flex items-center"
+                    className="mt-3 text-white hover:text-indigo-600 inline-flex items-center"
                     href="/route/admin/usersData"
                   >
                     Show Users
@@ -118,7 +118,7 @@ const Admin = () => {
                     admin tools for optimal organization."
                   </p>
                   <Link
-                    className="mt-3 text-indigo-500 inline-flex items-center"
+                    className="mt-3 text-white hover:text-indigo-600 inline-flex items-center"
                     href="/route/admin/userContacts"
                   >
                     Show Contacts
@@ -150,14 +150,13 @@ const Admin = () => {
                 </div>
                 <div className="flex-grow">
                   <h2 className="text-white text-lg title-font font-medium mb-3">
-                   Assign User Task 
+                    Assign User Task
                   </h2>
                   <p className="leading-relaxed text-base">
-                    "Streamline your contact management process with powerful
-                    admin tools for optimal organization."
+                    "As an administrator, you can assign tasks to users to ensure efficient project management and accountability."
                   </p>
                   <Link
-                    className="mt-3 text-indigo-500 inline-flex items-center"
+                    className="mt-3 text-white hover:text-indigo-600 inline-flex items-center"
                     href="/route/admin/assignTask"
                   >
                     Assign Task To User
@@ -189,14 +188,13 @@ const Admin = () => {
                 </div>
                 <div className="flex-grow">
                   <h2 className="text-white text-lg title-font font-medium mb-3">
-                   User Tasks List
+                    User Tasks List
                   </h2>
                   <p className="leading-relaxed text-base">
-                    "Streamline your contact management process with powerful
-                    admin tools for optimal organization."
+                    "On this page, you can view and manage the tasks assigned to users within your organization.
                   </p>
                   <Link
-                    className="mt-3 text-indigo-500 inline-flex items-center"
+                    className="mt-3 text-white hover:text-indigo-600 inline-flex items-center"
                     href="/route/admin/taskData"
                   >
                     View Tasks
@@ -228,14 +226,13 @@ const Admin = () => {
                 </div>
                 <div className="flex-grow">
                   <h2 className="text-white text-lg title-font font-medium mb-3">
-                   Total Amount
+                    Total Amount
                   </h2>
                   <p className="leading-relaxed text-base">
-                    "Streamline your contact management process with powerful
-                    admin tools for optimal organization."
+                    "User Task Payment Overview page, where you can efficiently track payment status of tasks assigned to users."
                   </p>
                   <Link
-                    className="mt-3 text-indigo-500 inline-flex items-center"
+                    className="mt-3 text-white hover:text-indigo-600 inline-flex items-center"
                     href="/route/admin/viewAmount"
                   >
                     View Total Amount

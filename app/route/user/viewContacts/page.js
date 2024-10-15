@@ -75,19 +75,18 @@ const Page = () => {
   }, [page, limit]);
 
       //---------------------------------------- HANDLE LIMIT CHANGE FUNCTION ------------------------------------------
-  
+
       const handleLimitChange = (event) => {
         setLimit(Number(event.target.value));
-        setPage(1); // Reset to first page when the limit is changed
+        setPage(1);
       };
-  
+
       //---------------------------------------- HANDLE DELETE FUNCTION ------------------------------------------
 
 
   const handleDelete = async (_id) => {
     if (window.confirm("Are you sure you want to delete this contact?")) {
       const token = localStorage.getItem("token")?.replace(/"/g, "");
-      // console.log("contact id---------", _id);
 
           //---------------------------------------- API Fetch DELETE ------------------------------------------
 
@@ -208,7 +207,7 @@ const Page = () => {
 
     doc.save('contacts.pdf');
 
- }
+}
 
   return (
     <>
@@ -220,9 +219,9 @@ const Page = () => {
         </h1>
       </div>
 
-             {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
+              {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
 
-             <DropdownMenu  >
+  <DropdownMenu  >
     <DropdownMenuTrigger className = 'flex ml-auto  bg-white text-black rounded-sm p-2'>Download</DropdownMenuTrigger>
     <DropdownMenuContent>
       <DropdownMenuLabel>Contact's Download</DropdownMenuLabel>
@@ -290,7 +289,7 @@ const Page = () => {
 
 {/* //---------------------------------------- PAGINATION ------------------------------------------ */}
 
-               {/*-------------------------------- Limit Dropdown ----------------------------*/}
+                {/*-------------------------------- Limit Dropdown ----------------------------*/}
 
 
       <Pagination className={"flex justify-center items-center mt-10 gap-72"}>

@@ -67,6 +67,7 @@ const Navbar = () => {
     }
   };
 
+
       //---------------------------------------- USE EFFECT ------------------------------------------
 
   useEffect(() => {
@@ -77,6 +78,8 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollY]);
+
+
 
   return (
     <div
@@ -112,7 +115,9 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
-      
+
+
+
       {/* //---------------------------------------- CHECKING CONDITION ------------------------------------------ */}
 
       <div className="cart absolute right-0 top-5 mx-6 cursor-pointer flex">

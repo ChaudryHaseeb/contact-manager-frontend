@@ -71,7 +71,7 @@ const Admin = () => {
                     "Add Your Contacts Here Or Centralize and Manage Contacts Effortlessly."
                   </p>
                   <Link
-                    className="mt-3 text-indigo-600 inline-flex items-center"
+                    className="mt-3 inline-flex items-center hover:text-indigo-600"
                     href="/route/user/addContact"
                     >
                     Want To Add Contact?
@@ -109,7 +109,7 @@ const Admin = () => {
                     "View Your All Contacts Here And  Manage Them For Optimal Organization."
                   </p>
                   <Link
-                    className="mt-3 text-indigo-600 inline-flex items-center"
+                    className="mt-3 hover:text-indigo-600 inline-flex items-center"
                     href="/route/user/viewContacts"
                     >
                     Show Contacts
@@ -147,7 +147,7 @@ const Admin = () => {
                     "View Your All Tasks Here And  Manage Them For Optimal Organization."
                   </p>
                   <Link
-                    className="mt-3 text-indigo-600 inline-flex items-center"
+                    className="mt-3 hover:text-indigo-600 inline-flex items-center"
                     href={'/route/user/userTasks'}
                   >
                     Show My Task's
@@ -182,10 +182,10 @@ const Admin = () => {
                     Earning Detail's
                   </h2>
                   <p className="leading-relaxed text-base text-gray-400">
-                    "View Your All Tasks Here And  Manage Them For Optimal Organization."
+                    "Task Payment Overview page, where you can efficiently track payment status of tasks."
                   </p>
                   <Link
-                    className="mt-3 text-indigo-600 inline-flex items-center"
+                    className="mt-3 hover:text-indigo-600 inline-flex items-center"
                     href={'/route/user/viewEarnAmount'}
                   >
                     Show My Earn Amount

@@ -33,7 +33,7 @@ export default function CardTask() {
     <Card className="max-w-max w-[500px] h-[400px] bg-[#2b1d35] text-white border border-[#bc63ff] border-none cursor-pointer">
       <CardContent className="flex gap-4 p-4 pb-2 cursor-pointer">
         <ChartContainer
-           config={{
+            config={{
             TotalTasks: {
               label: "Total Tasks",
               color: "hsl(var(--chart-1))",
@@ -50,7 +50,7 @@ export default function CardTask() {
               label: "Complete Tasks",
               color: "hsl(var(--chart-4))",
             },
-          
+
           }}
           className="h-[240px] w-full mb-10"
         >
@@ -111,7 +111,7 @@ export default function CardTask() {
       <CardFooter className="flex flex-row border-t p-4 border border-[#371d4a] border-none ">
         <div className="flex w-full items-center gap-2">
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-xs text-muted-foreground">Total</div>
+            <div className="text-xs">Total</div>
             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
               {totalTask}
               <span className="text-sm font-normal text-muted-foreground">
@@ -121,7 +121,7 @@ export default function CardTask() {
           </div>
           <Separator orientation="vertical" className="mx-2 h-10 w-px" />
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-xs text-muted-foreground">Completed</div>
+            <div className="text-xs">Completed</div>
             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
             {totalComplete}
               <span className="text-sm font-normal text-muted-foreground">
@@ -131,7 +131,7 @@ export default function CardTask() {
           </div>
           <Separator orientation="vertical" className="mx-2 h-10 w-px" />
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-xs text-muted-foreground">Assigned</div>
+            <div className="text-xs">Assigned</div>
             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
             {totalAssignd}
               <span className="text-sm font-normal text-muted-foreground">
@@ -141,7 +141,7 @@ export default function CardTask() {
           </div>
           <Separator orientation="vertical" className="mx-2 h-10 w-px" />
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-xs text-muted-foreground">Pending</div>
+            <div className="text-xs">Pending</div>
             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
               {totalPending}
               <span className="text-sm font-normal text-muted-foreground">

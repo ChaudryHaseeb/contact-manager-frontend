@@ -32,10 +32,10 @@ export default function CardPaymentDetails() {
       <CardContent className="flex gap-4 p-4">
         <div className="grid items-center gap-2">
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm text-muted-foreground">Total Amount</div>
+            <div className="text-sm">Total Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {total}
-              <span className="text-sm font-normal text-muted-foreground ">
+              <span className="text-sm font-normal">
                 $
               </span>
             </div>
@@ -43,10 +43,10 @@ export default function CardPaymentDetails() {
           <Separator orientation="row" className="mx-2 w-px" />
 
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm text-muted-foreground">Paid Amount</div>
+            <div className="text-sm">Paid Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {totalPaid}
-              <span className="text-sm font-normal text-muted-foreground ">
+              <span className="text-sm font-normal ">
                 $
               </span>
             </div>
@@ -54,10 +54,10 @@ export default function CardPaymentDetails() {
           <Separator orientation="row" className="mx-2 w-px" />
 
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm text-muted-foreground">Unpaid Amount</div>
+            <div className="text-sm">Unpaid Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {totalUnPaid}
-              <span className="text-sm font-normal text-muted-foreground ">
+              <span className="text-sm font-normal">
                 $
               </span>
             </div>

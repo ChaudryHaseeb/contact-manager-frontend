@@ -14,12 +14,10 @@ const UserTasks = () => {
         if (response.status === 200) {
           setTasks(response.data.userTask);
         } else {
-          console.error('Failed to fetch tasks:', response.statusText);
           toast.error('Failed To Fetch Your All Tasks');
 
         }
       } catch (error) {
-        console.error('Server error:', error);
         toast.error('Server Error');
 
       }
@@ -39,12 +37,10 @@ const UserTasks = () => {
         toast.success('Time Started');
 
       } else {
-        console.error('Failed to start task:', response.statusText);
         toast.error('Failed to start task');
 
       }
     } catch (error) {
-      console.error('Server error:', error);
       toast.error('Server Error');
 
     }
@@ -60,12 +56,10 @@ const UserTasks = () => {
         toast.success('Complete Task Successfully');
 
       } else {
-        console.error('Failed to complete task:', response.statusText);
         toast.error('Failed to complete task');
 
       }
     } catch (error) {
-      console.error('Server error:', error);
       toast.error('Server Error');
 
     }

@@ -141,24 +141,24 @@ export default function Signup() {
             >
               Password
             </label>
-            <input 
+            <input
               {...register("password", { required: "Password is required" })}
               id="password"
               type={visiblePassword ? 'text' : "password"}
               placeholder="Password"
               className="mt-1 p-2 border rounded w-full"
               autoComplete="new-password"
-            />           
+            />
 
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password.message}</p>
             )}
           </div>
           <div className="flex mt-1 items-center">
-             <Checkbox id='password' checked = {visiblePassword} onCheckedChange={()=>setVisiblePassword(!visiblePassword)}  />
-             <label htmlFor="password" className="ml-2 ">Show Password</label>
+              <Checkbox id='password' checked = {visiblePassword} onCheckedChange={()=>setVisiblePassword(!visiblePassword)}  />
+              <label htmlFor="password" className="ml-2 ">Show Password</label>
 
-             </div>
+              </div>
           <Button className="w-full" type="submit" variant="default">
             Sign Up
           </Button>

@@ -13,7 +13,7 @@ const ResetPassword = () => {
     const [loading, setLoading] =  useState();
     const [visiblePassword, setVisiblePassword] = useState(false);
     const password = watch('password');
- 
+
     const onSubmit = async (data) =>{
         setLoading(true);
 
@@ -45,7 +45,7 @@ const ResetPassword = () => {
             toast.success("Password reset successfull!!", {
                 position: "top-right",
                 autoClose: 1000,
-              });
+                });
         } catch (error) {
             toast.error('Error in Reseting the Password')
         }finally{
@@ -53,38 +53,38 @@ const ResetPassword = () => {
         };
     }
 
-  return (
+return (
     <div className='flex flex-col justify-center items-center min-h-screen'>
-              
-               <ToastContainer
+
+        <ToastContainer
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}
-      />
+        />
         <h1 className=" text-green-600 font-bold text-3xl py-2 px-6 mb-4 rounded-sm">Reset Password</h1>
         <form onSubmit={handleSubmit(onSubmit)} className='w-full max-w-sm'>
             <label htmlFor="password" className='block text-sm font-medium text-gray-400'>
-               New Password
+                New Password
             </label>
-            <input 
+            <input
             id='password'
-            type={visiblePassword ? 'text' : 'password'} 
+            type={visiblePassword ? 'text' : 'password'}
             {...register('password',{required :'Password is require'})}
             placeholder='Enter new password'
             className='w-full p-2 border border-gray-300 rounded text-black'
             />
-         {errors.password && (
+            {errors.password && (
           <p className="text-red-500 text-sm">{errors.password.message}</p> // Render message, not object
         )}
 
                               {/* Confirm Password */}
 
             <label htmlFor="confirmPassword" className='block text-sm font-medium text-gray-400 mt-4'>
-               Confirm New Password
+                    Confirm New Password
             </label>
-            <input 
+            <input
             id='confirmPassword'
-            type={visiblePassword ? 'text' : 'password'} 
+            type={visiblePassword ? 'text' : 'password'}
             {...register('confirmPassword',{required :'Password is require',
                 validate: value => value === password || 'Password do not match'
             })}
@@ -100,14 +100,14 @@ const ResetPassword = () => {
             </div>
             <button type='submit' className={`w-full mt-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition ${
             loading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={loading} 
-          >
+            }`}
+            disabled={loading}
+            >
             {loading ? 'Reseting...' : 'Password Reset'}
             </button>
         </form>
         </div>
-  )
+)
 }
 
 export default ResetPassword

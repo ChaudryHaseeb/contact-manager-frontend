@@ -12,10 +12,8 @@ const AllUsersTasks = () => {
     const fetchTasks = async () => {
       try {
         const response = await ApiService.fetchUsersTask();
-        // console.log('data=========',response.data);
         if (response.status === 200) {
             setTasks(response.data.userTask);
-            // toast.success('Fetching Users Tasks Successfull');
         } else {
           console.error('Failed to fetch tasks:', response.statusText);
           toast.error('Failed to fetch users tasks');
@@ -27,16 +25,14 @@ const AllUsersTasks = () => {
 
       }
     };
-    
+
     fetchTasks();
 }, []);
 
 const confirmPayment=async(taskId) => {
     try {
         const response = await ApiService.confirmationPayment(taskId);
-        // console.log('dataNew=========',response.data);
         if (response.status === 200) {
-            // console.log('response is ok..');
             const updatedTasksResponse = await ApiService.fetchUsersTask();
             setTasks(updatedTasksResponse.data.userTask)
             toast.success('Payment Successfull');
@@ -48,7 +44,7 @@ const confirmPayment=async(taskId) => {
         console.error('Server error:', error);
         toast.error('Server Error');
     }
-   };
+    };
 
 
   return (

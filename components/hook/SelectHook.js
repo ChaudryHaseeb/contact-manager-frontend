@@ -1,8 +1,6 @@
-'use client'; // This ensures the component is rendered on the client side
-
+'use client';
 import React, {useEffect, useState } from 'react';
 import Select from 'react-select';
-// import { colourOptions } from '../data';
 
 const Checkbox = ({ children, ...props }) => (
   <label style={{ marginRight: '1em' }}>
@@ -42,33 +40,30 @@ const CustomSelect = ({onChange}) => {
           });
 
           if (!response.ok) {
-              console.log('Response is not ok..');
               return;
           }
 
           const data = await response.json();
-          console.log('data-----------',data)
           setUser(data);
       } catch (error) {
           console.error('Failed to fetch users', error);
       }
   };
-// console.log('user-------========,',User)
 
 
   useEffect(() => {
       fetchUsers();
-  }, []);  
+  }, []);
 
 
- const  nameOptions = User.map((user) => ({
+const  nameOptions = User.map((user) => ({
     value : user._id,
     label : user.username && user.email
- }))
+}))
 
- const handleSelectChange = (selectOption) =>{
- return   onChange(selectOption ? selectOption.value : selectOption.value);
- }
+const handleSelectChange = (selectOption) =>{
+return   onChange(selectOption ? selectOption.value : selectOption.value);
+}
 
   return (
     <>

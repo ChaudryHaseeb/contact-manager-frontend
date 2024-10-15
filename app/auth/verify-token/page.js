@@ -34,13 +34,12 @@ const VerifyToken = () => {
           if (response.ok) {
             setMessage(result.message || 'Email verified successfully!');
             setTimeout(() => {
-              router.push('/login'); // Redirect to login after success
+              router.push('/login');
             }, 3000);
           } else {
             setMessage(result.message || 'Verification failed. Please try again.');
           }
         } catch (error) {
-          console.error('Error verifying email:', error);
           setMessage('An error occurred while verifying your email.');
         }
       } else {

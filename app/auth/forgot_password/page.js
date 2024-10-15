@@ -25,8 +25,6 @@ const ForgotPassword = () => {
         }
       );
 
-      // console.log('response------------------',response);
-
       if (!response.ok) {
         throw new Error("Failed to sent email");
       }
@@ -42,7 +40,7 @@ const ForgotPassword = () => {
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-       <ToastContainer
+        <ToastContainer
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}
@@ -58,7 +56,7 @@ const ForgotPassword = () => {
           placeholder="Enter your email"
           className="w-full p-2 mt-1 border border-gray-300 rounded text-black"
         />
-         {errors.email && (
+          {errors.email && (
               <p className="text-red-500 text-sm">{errors.email.message}</p>
             )}
         <button

@@ -40,7 +40,6 @@ const Login = () => {
 
       if (response.ok) {
         const result = await response.json();
-        // console.log(result);
         localStorage.setItem("token", JSON.stringify(result.accessToken));
         localStorage.setItem("role", JSON.stringify(result.user.role));
         toast.success("🦄 Login successful!", {
@@ -133,7 +132,7 @@ const Login = () => {
           </Button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </form>
-        
+
 
         {/* //---------------------------------------- LINK SIGN  UP PAGE  ------------------------------------------ */}
 

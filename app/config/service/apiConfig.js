@@ -24,7 +24,6 @@ const ApiService = {
             const response = await api.get('/task/getTask/all');
             return response;
         } catch (error) {
-            console.error('Error fetching tasks:', error);
             throw error;
         }
     },
@@ -34,7 +33,6 @@ const ApiService = {
             const response = await api.get('/task/getTask/all/users');
             return response;
         } catch (error) {
-            console.error('Error fetching tasks:', error);
             throw error;
         }
     },
@@ -44,7 +42,6 @@ const ApiService = {
             const response = await api.put(`/task/confirm/${taskId}`);
             return response;
         } catch (error) {
-            console.error('Error confirming task:', error);
             throw error;
         }
     },
@@ -54,7 +51,6 @@ const ApiService = {
             const response = await api.put(`/task/complete/${taskId}`);
             return response;
         } catch (error) {
-            console.error('Error confirming task:', error);
             throw error;
         }
     },
@@ -65,7 +61,6 @@ const ApiService = {
             const response = await api.put(`/task/confirm/payment/${taskId}`);
             return response;
         } catch (error) {
-            console.error('Error confirming payment', error);
             throw error;
         };
     },
@@ -75,7 +70,6 @@ const ApiService = {
             const response = await api.get('/task/payment-status');
             return response.data;
         } catch (error) {
-            console.error('Error calculating payment', error);
             throw error;
         };
     },
@@ -85,7 +79,6 @@ const ApiService = {
             const response = await api.get('/task/totalTaskDetail');
             return response.data;
         } catch (error) {
-            console.error('Error calculating payment', error);
             throw error;
         };
     },
@@ -96,7 +89,6 @@ const ApiService = {
             const response = await api.get('/user/allusers');
             return response.data;
         } catch (error) {
-            console.error('Error calculating payment', error);
             throw error;
         };
     },

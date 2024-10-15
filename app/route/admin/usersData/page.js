@@ -59,7 +59,7 @@ const Page = () => {
       if (!response.ok) throw new Error("Failed to fetch users");
 
       const data = await response.json();
-      setUsers(data.users || []); 
+      setUsers(data.users || []);
       setTotalPages(data.totalPages || 1);
     } catch (error) {
       toast.error(error.message || "Error fetching users");
@@ -73,10 +73,10 @@ const Page = () => {
   }, [page, limit]);
 
       //---------------------------------------- HANDLE LIMIT CHANGE FUNCTION ------------------------------------------
-  
+
       const handleLimitChange = (event) => {
         setLimit(Number(event.target.value));
-        setPage(1); // Reset to first page when the limit is changed
+        setPage(1);
       };
 
       //---------------------------------------- HANDLE DELETE FUNCTION ------------------------------------------
@@ -98,7 +98,6 @@ const Page = () => {
             },
           }
         );
-        // console.log("user id ==========", user_Id);
 
         if (!response.ok) throw new Error("Failed to delete user");
         setUsers(users.filter((user) => user._id !== user_Id));
@@ -215,9 +214,9 @@ const Page = () => {
         </h1>
       </div>
 
-           {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
+            {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
 
-           <DropdownMenu  >
+  <DropdownMenu  >
     <DropdownMenuTrigger className = 'flex ml-auto bg-white text-black rounded-sm p-2'>Download</DropdownMenuTrigger>
     <DropdownMenuContent>
       <DropdownMenuLabel>User's Download</DropdownMenuLabel>
@@ -275,7 +274,7 @@ const Page = () => {
 
 {/* //---------------------------------------- PAGINATION ------------------------------------------ */}
 
-               {/*-------------------------------- Limit Dropdown ----------------------------*/}
+                {/*-------------------------------- Limit Dropdown ----------------------------*/}
 
 
       <Pagination className={"flex justify-center items-center mt-10 gap-72"}>

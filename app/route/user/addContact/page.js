@@ -50,19 +50,19 @@ const Management = () => {
 
     //---------------------------------------- FETCH CONTACT FUNCTION ------------------------------------------
 
-  
+
   const fetchContacts = async (pageNumber) => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
     const userRole = JSON.parse(localStorage.getItem("role"));
     setRole(userRole);
-    
+
     if (!token) {
       toast.error("You are not authorized. Please log in.");
       return;
 
     }
     //---------------------------------------- API Fetch GET ------------------------------------------
-    
+
     try {
       const response = await fetch(
         `http://localhost:8080/api/contacts?page=${pageNumber}&limit=${limit}`,
@@ -90,10 +90,10 @@ const Management = () => {
   }, [page, limit]);
 
     //---------------------------------------- HANDLE LIMIT CHANGE FUNCTION ------------------------------------------
-  
+
     const handleLimitChange = (event) => {
       setLimit(Number(event.target.value));
-      setPage(1); // Reset to first page when the limit is changed
+      setPage(1);
     };
 
   //------------------------------------ ONSUBMIT FUNCTION ---------------------------------
@@ -309,7 +309,7 @@ const Management = () => {
 
     doc.save('contacts.pdf');
 
- }
+}
 
   return (
     <div className="container mx-auto mt-6 p-4 bg-[url('/Login.avif')] bg-cover min-h-screen">
@@ -393,9 +393,9 @@ const Management = () => {
       </form>
 
 
-       {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
+        {/*-------------------------------- DROP_DOWN Buttom --------------------------------------*/}
 
-       <DropdownMenu  >
+  <DropdownMenu  >
     <DropdownMenuTrigger className = 'flex ml-auto bg-white text-black rounded-sm p-2'>Download</DropdownMenuTrigger>
     <DropdownMenuContent>
       <DropdownMenuLabel>Contact's Download</DropdownMenuLabel>
@@ -405,7 +405,7 @@ const Management = () => {
     </DropdownMenuContent>
   </DropdownMenu>
 
-  
+
   {/*------------------------------------------ TABLE DATA DISPLAY --------------------------------------- */}
 
       <div className="overflow-x-auto mt-6 min-h-[200px]">
