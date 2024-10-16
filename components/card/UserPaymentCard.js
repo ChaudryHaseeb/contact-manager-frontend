@@ -16,10 +16,10 @@ export default function UserPaymentCard() {
       const fetchTasks = async () => {
         try {
           const {task, TotalAmount, TotalAmountPaid, TotalAmountUnpaid} = await ApiService.getTasksWithPaymentStatus();
-          setTasks(task);
-          setTotal(TotalAmount);
-          setTotalPaid(TotalAmountPaid);
-          setTotalUnpaid(TotalAmountUnpaid)
+          setTasks(task || []);
+          setTotal(TotalAmount || 0);
+          setTotalPaid(TotalAmountPaid || 0);
+          setTotalUnpaid(TotalAmountUnpaid || 0)
         } catch (error) {
           console.error('Error fetching tasks with payment status:', error);
         }
@@ -27,6 +27,8 @@ export default function UserPaymentCard() {
 
       fetchTasks();
     }, []);
+    const calculatePercentage = (partial, total) => (total > 0 ? (partial / total) * 100 : 0);
+
   return (
     <>
     <Card className="max-w-fit w-[500px] h-[400px] bg-[#2b1d35] text-white cursor-pointer border border-[#bc63ff] border-none">
@@ -47,6 +49,7 @@ export default function UserPaymentCard() {
             <div className="text-sm">Received Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {totalPaid}
+
               <span className="text-sm font-normal  ">
                 $
               </span>
@@ -58,6 +61,7 @@ export default function UserPaymentCard() {
             <div className="text-sm ">Remaining Amount</div>
             <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
               {totalUnPaid}
+
               <span className="text-sm font-normal ">
                 $
               </span>
@@ -96,12 +100,12 @@ export default function UserPaymentCard() {
               },
               {
                 activity: "Received Amount",
-                value: (totalPaid / total) * 100,
+                value: calculatePercentage(totalPaid , total),
                 fill:  "#bc63ff",
               },
               {
                 activity: "Remaining Amount",
-                value: (totalUnPaid / total) * 100,
+                value: calculatePercentage(totalUnPaid , total),
                 fill:  "#9d3c8f",
               },
             ]}
@@ -112,7 +116,7 @@ export default function UserPaymentCard() {
           >
             <PolarAngleAxis
               type="number"
-              domain={[0, Math.max(total, totalPaid, totalUnPaid)]}
+              domain={[0, 100]}
               dataKey="value"
               stroke=""
               tick={false}

@@ -4,6 +4,7 @@ import ApiService from "../../../config/service/apiConfig";
 import Navbar from "@/components/layout/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion"
 
 const AllUsersTasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -61,6 +62,11 @@ const confirmPayment=async(taskId) => {
         draggable
         pauseOnHover
       />
+      <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}
+  >
       <div className="p-8 w-full mx-auto mt-14 mb-36">
         <h2 className="text-5xl mb-12 font-semibold ml-96">Assigned Tasks</h2>
         <div className="grid grid-cols-2 gap-4">
@@ -70,19 +76,18 @@ const confirmPayment=async(taskId) => {
             <div key={task._id} className="bg-gray-100 p-4 rounded text-lg shadow-md mb-6 text-black">
               <p><strong>Assigned To:</strong> {task.assignedTo}</p>
               <p><strong>Description:</strong> {task.description}</p>
-              <p><strong>Hourly Rate:</strong> ${task.hourlyRate}</p>
+              <p><strong>Hourly Rate:</strong> {task.hourlyRate}$</p>
               <p><strong>Status:</strong> {task.status}</p>
               <p><strong>Task ID:</strong> {task._id}</p>
               <p><strong>Payment Status:</strong> {task.paymentStatus}</p>
 
-              <button
+            {task.status === 'complete' ? <button
                 onClick={()=> confirmPayment(task._id)}
                 className={`bg-green-600 text-white px-4 py-2 rounded mt-4 hover:bg-green-700 cursor-pointer ${task.paidByAdmin ? "opacity-50 cursor-not-allowed" : ""}`}
                 disabled={task.paidByAdmin}
               >
                 {task.paidByAdmin ? "Paid" : "Pay Now" }
-              </button>
-
+              </button> : <span className="text-red-600 font-semibold">Not Complete Yet</span>}
             </div>
           ))
         ) : (
@@ -90,6 +95,7 @@ const confirmPayment=async(taskId) => {
         )}
         </div>
       </div>
+      </motion.div>
     </>
   );
 };

@@ -3,16 +3,17 @@ import React, { useState, useEffect } from "react";
 import ApiService from "../../app/config/service/apiConfig";
 import { Bar, BarChart, LabelList, XAxis, YAxis } from "recharts";
 
-import { Card, CardContent, CardFooter } from "@/components//ui/card";
-import { ChartContainer } from "@/components//ui/chart";
-import { Separator } from "@/components//ui/separator";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { ChartContainer } from "@/components/ui/chart";
+import { Separator } from "@/components/ui/separator";
 
 export default function UserTaskCard() {
   const [tasks, setTasks] = useState([]);
   const [totalTask, setTotalTasks] = useState(0);
   const [totalPending, setTotalPending] = useState(0);
-  const [totalAssignd, setTotalAssigned] = useState(0);
+  const [totalAssigned, setTotalAssigned] = useState(0);
   const [totalComplete, setTotalCompleted] = useState(0);
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -23,11 +24,12 @@ export default function UserTaskCard() {
           TotalCompletedTasks,
           TotalAssignedTasks,
         } = await ApiService.getTasksDetails();
-        setTasks(task);
-        setTotalTasks(TotalTasks);
-        setTotalPending(TotalPendingTasks);
-        setTotalCompleted(TotalCompletedTasks);
-        setTotalAssigned(TotalAssignedTasks);
+
+        setTasks(task || []);
+        setTotalTasks(TotalTasks || 0);
+        setTotalPending(TotalPendingTasks || 0);
+        setTotalCompleted(TotalCompletedTasks || 0);
+        setTotalAssigned(TotalAssignedTasks || 0);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
@@ -35,6 +37,8 @@ export default function UserTaskCard() {
 
     fetchTasks();
   }, []);
+
+  const calculatePercentage = (partial, total) => (total > 0 ? (partial / total) * 100 : 0);
 
   return (
     <Card className="max-w-max w-[500px] h-[400px] bg-[#2b1d35] text-white border border-[#bc63ff] border-none cursor-pointer">
@@ -54,19 +58,14 @@ export default function UserTaskCard() {
               color: "hsl(var(--chart-3))",
             },
             AssignTasks: {
-              label: "Complete Tasks",
+              label: "Assigned Tasks",
               color: "hsl(var(--chart-4))",
             },
           }}
           className="h-[240px] w-full mb-10"
         >
           <BarChart
-            margin={{
-              left: 10,
-              right: 10,
-              top: 10,
-              bottom: 10,
-            }}
+            margin={{ left: 10, right: 10, top: 10, bottom: 10 }}
             data={[
               {
                 activity: "Total",
@@ -75,17 +74,17 @@ export default function UserTaskCard() {
               },
               {
                 activity: "Complete",
-                value: (totalComplete / totalTask) * 100,
+                value: calculatePercentage(totalComplete, totalTask),
                 fill: "#bc63ff",
               },
               {
-                activity: "Assign",
-                value: (totalAssignd / totalTask) * 100,
+                activity: "Assigned",
+                value: calculatePercentage(totalAssigned, totalTask),
                 fill: "#9d3c8f",
               },
               {
                 activity: "Pending",
-                value: (totalPending / totalTask) * 100,
+                value: calculatePercentage(totalPending, totalTask),
                 fill: "#bc63ff",
               },
             ]}
@@ -104,7 +103,6 @@ export default function UserTaskCard() {
               className="capitalize"
               tick={{ fill: "#F5F5F5", fontSize: 14 }}
             />
-
             <Bar dataKey="value" radius={10}>
               <LabelList
                 position="insideLeft"
@@ -117,6 +115,7 @@ export default function UserTaskCard() {
           </BarChart>
         </ChartContainer>
       </CardContent>
+
       <CardFooter className="flex flex-row border-t p-4 border border-[#371d4a] border-none ">
         <div className="flex w-full items-center gap-2">
           <div className="grid flex-1 auto-rows-min gap-0.5">
@@ -142,7 +141,7 @@ export default function UserTaskCard() {
           <div className="grid flex-1 auto-rows-min gap-0.5">
             <div className="text-xs ">Assigned</div>
             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
-              {totalAssignd}
+              {totalAssigned}
               <span className="text-sm font-normal text-muted-foreground">
                 tasks
               </span>

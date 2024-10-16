@@ -22,6 +22,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Navbar from "@/components/layout/Navbar";
+import { motion } from "framer-motion"
+
 
 const Page = () => {
 
@@ -206,7 +208,13 @@ const Page = () => {
 
   return (
     <>
+
     <Navbar/>
+    <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}
+  >
     <div className="container mx-auto p-4 bg-[url('/Admin-User-Management3.webp')] bg-cover bg-center min-h-screen">
       <div className="flex items-center justify-center">
         <h1 className="text-white text-3xl font-bold mt-16 mb-1">
@@ -319,6 +327,7 @@ const Page = () => {
         <span className="mt-2 ml-auto">{`Page ${page} of ${totalPages}`}</span>
       </Pagination>
     </div>
+    </motion.div>
     </>
   );
 };

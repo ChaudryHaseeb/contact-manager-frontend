@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/layout/Footer";
+import Head from "next/head";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,12 +20,11 @@ export const metadata = {
 };
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-      <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any" />
-      </head>
+    <html lang="en"  suppressHydrationWarning={true}>
+
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        suppressHydrationWarning={true}
       >
 
         {children}

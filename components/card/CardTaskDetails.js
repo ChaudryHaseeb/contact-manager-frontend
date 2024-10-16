@@ -17,11 +17,11 @@ export default function CardTask() {
     const fetchTasks = async () => {
       try {
         const {task, TotalTasks, TotalPendingTasks, TotalCompletedTasks, TotalAssignedTasks} = await ApiService.getTasksDetails();
-        setTasks(task);
-        setTotalTasks(TotalTasks);
-        setTotalPending(TotalPendingTasks);
-        setTotalCompleted(TotalCompletedTasks)
-        setTotalAssigned(TotalAssignedTasks)
+        setTasks(task || []);
+        setTotalTasks(TotalTasks || 0);
+        setTotalPending(TotalPendingTasks || 0);
+        setTotalCompleted(TotalCompletedTasks || 0)
+        setTotalAssigned(TotalAssignedTasks || 0)
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
@@ -29,6 +29,7 @@ export default function CardTask() {
 
     fetchTasks();
   }, []);
+  const calculatePercentage = (partial, total) => (total > 0 ? (partial / total) * 100 : 0);
   return (
     <Card className="max-w-max w-[500px] h-[400px] bg-[#2b1d35] text-white border border-[#bc63ff] border-none cursor-pointer">
       <CardContent className="flex gap-4 p-4 pb-2 cursor-pointer">
@@ -69,17 +70,17 @@ export default function CardTask() {
                 },
                 {
                   activity: "Complete",
-                  value: (totalComplete / totalTask) * 100,
+                  value: calculatePercentage(totalComplete , totalTask),
                   fill: "#bc63ff",
                 },
                 {
                   activity: "Assign",
-                  value: (totalAssignd / totalTask) * 100,
+                  value: calculatePercentage(totalAssignd , totalTask),
                   fill: "#9d3c8f",
                 },
                 {
                   activity: "Pending",
-                  value: (totalPending / totalTask) * 100,
+                  value: calculatePercentage(totalPending , totalTask),
                   fill: "#bc63ff",
                 },
               ]}

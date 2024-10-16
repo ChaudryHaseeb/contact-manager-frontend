@@ -24,6 +24,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Navbar from "@/components/layout/Navbar";
+import { motion } from "framer-motion"
+
 
 const Management = () => {
 
@@ -311,6 +313,12 @@ const Management = () => {
 }
 
   return (
+    <>
+    <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}
+  >
     <div className="container mx-auto mt-6 p-4 bg-[url('/Login.avif')] bg-cover min-h-screen">
       <Navbar/>
       <ToastContainer
@@ -546,6 +554,8 @@ const Management = () => {
       </Pagination>
 
     </div>
+    </motion.div>
+    </>
   );
 };
 

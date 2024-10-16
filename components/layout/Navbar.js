@@ -6,80 +6,60 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
-
-      //---------------------------------------- CONSTANTS DICLARATION ------------------------------------------
-
   const router = useRouter();
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-      //---------------------------------------- LOGOUT FUNCTION ------------------------------------------
-
+  // Logout function
   const logout = () => {
     localStorage.removeItem("token");
-
     setIsLoggedIn(false);
   };
 
-      //---------------------------------------- HANDLE LOGOUT FUNCTION ------------------------------------------
-
+  // Handle logout
   const handleLogout = () => {
     logout();
     router.push("/");
   };
 
-      //---------------------------------------- CHECK LOGIN STATUS FUNCTION ------------------------------------------
-
+  // Check login status
   const checkLoginStatus = () => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
     setIsLoggedIn(!!token);
   };
 
-      //---------------------------------------- USE EFFECT ------------------------------------------
+  // Scroll handler
+  const handleScroll = () => {
+    if (typeof window !== "undefined") {
+      const currentScrollY = window.scrollY;
 
+      if (currentScrollY > lastScrollY) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+      setLastScrollY(currentScrollY);
+    }
+  };
+
+  // useEffect to monitor scroll events and login status
   useEffect(() => {
     checkLoginStatus();
-
     const handleStorageChange = (event) => {
       if (event.key === "token") {
         checkLoginStatus();
       }
     };
 
-    window.addEventListener("storage", handleStorageChange);
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, [isLoggedIn]);
-
-      //---------------------------------------- HANDLE SCROLL FUNCTION ------------------------------------------
-
-
-  const handleScroll = () => {
-    if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-      setLastScrollY(window.scrollY);
-    }
-  };
-
-
-      //---------------------------------------- USE EFFECT ------------------------------------------
-
-  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    checkLoginStatus();
+    window.addEventListener("storage", handleStorageChange);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, [lastScrollY]);
-
-
 
   return (
     <div
@@ -89,13 +69,7 @@ const Navbar = () => {
     >
       <div className="my-3 md:mx-5">
         <Link href={"/"}>
-          <Image
-            src="/Home-Gradient.gif"
-            alt="Logo"
-            unoptimized
-            width={40}
-            height={25}
-                      />
+          <Image src="/Home-Gradient.gif" alt="Logo" unoptimized width={40} height={25} />
         </Link>
       </div>
       <div className="nav">
@@ -116,12 +90,8 @@ const Navbar = () => {
         </ul>
       </div>
 
-
-
-      {/* //---------------------------------------- CHECKING CONDITION ------------------------------------------ */}
-
       <div className="cart absolute right-0 top-5 mx-6 cursor-pointer flex">
-        <Link href={ "/"}>
+        <Link href="/">
           {isLoggedIn ? (
             <Button onClick={handleLogout} variant="destructive">
               Logout
@@ -140,4 +110,5 @@ const Navbar = () => {
     </div>
   );
 };
+
 export default Navbar;

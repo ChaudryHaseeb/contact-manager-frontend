@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const Login = () => {
+  
 
       //---------------------------------------- CONSTANTS DICLARATION ------------------------------------------
 
@@ -21,6 +22,26 @@ const Login = () => {
   const [error, setError] = useState("");
   const router = useRouter();
   const [visiblePassword, setVisiblePassword] = useState(false);
+
+   //---------------------------------------- CHECK LOGIN STATUS TO PREVENT ROUTE ------------------------------------------
+
+
+  const checkLoginStatus = () => {
+    const token = localStorage.getItem("token")?.replace(/"/g, "");
+    return !!token;
+  };
+
+  useEffect(() => {
+    if (checkLoginStatus()) {
+      const role = localStorage.getItem("role");
+
+      if (role === "admin") {
+        router.push("/route/admin/home");
+      } else {
+        router.push("/route/user/home");
+      }
+    }
+  }, [router]);
 
       //---------------------------------------- ONSUBMIT FUNCTION ------------------------------------------
 
@@ -41,7 +62,7 @@ const Login = () => {
       if (response.ok) {
         const result = await response.json();
         localStorage.setItem("token", JSON.stringify(result.accessToken));
-        localStorage.setItem("role", JSON.stringify(result.user.role));
+        localStorage.setItem("role", (result.user.role));
         toast.success("🦄 Login successful!", {
           position: "top-right",
           autoClose: 1000,

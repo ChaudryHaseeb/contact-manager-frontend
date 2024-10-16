@@ -5,14 +5,20 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import CardPaymentDetails from "@/components/card/CardPaymentDetails";
 import CardTask from "@/components/card/CardTaskDetails";
-// import DesktopMobileChart from "@/app/demoFiles/demoCharts";
+import { motion } from "framer-motion"
+
+
 
 const Admin = () => {
   return (
 
-    <div>
+    <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}
+  >
         <Navbar/>
-      <section className="text-gray-400 body-font [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] bg-cover ">
+      <section className="text-gray-400 body-font mb-10 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] bg-cover ">
         <div className="container px-5 py-20 mx-auto flex flex-wrap">
           <div className="flex flex-wrap w-full mb-10 flex-col items-center text-center mx-auto">
             <div className="flex items-center ">
@@ -34,7 +40,7 @@ const Admin = () => {
             </p>
           </div>
           <div className="min-h-screen mb-8">
-                  <h2 className="text-2xl font-semibold mb-8 ml-4">Admin Dashboard</h2>
+                  <h2 className="text-2xl text-white font-semibold mb-8 ml-4">Admin Dashboard</h2>
             <div className="flex">
                 <div className="flex-row ml-24 "><CardPaymentDetails/></div>
                 <div className="flex-row ml-10"><CardTask/></div>
@@ -254,7 +260,7 @@ const Admin = () => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 
