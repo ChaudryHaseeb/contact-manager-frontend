@@ -71,6 +71,11 @@ const UserTasks = () => {
 
   return (
     <>
+      <motion.div
+  initial={{ opacity: 0, scale: 0.5 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.5 }}
+>
       <Navbar />
       <ToastContainer
         position="top-right"
@@ -83,11 +88,6 @@ const UserTasks = () => {
         draggable
         pauseOnHover
       />
-        <motion.div
-    initial={{ opacity: 0, scale: 0.5 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.5 }}
-  >
       <div className="p-8 w-full mt-12 mb-36 ">
         <h2 className=" text-5xl mb-8 ml-96 font-semibold">Assigned Tasks</h2>
         <div className="grid grid-cols-2 gap-2">

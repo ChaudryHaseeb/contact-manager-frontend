@@ -8,6 +8,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { validatePassword } from "../../auth/ValidatePassword";
 import Image from "next/image";
+import { motion } from "framer-motion"
 
 export default function Signup() {
 
@@ -76,6 +77,11 @@ export default function Signup() {
   };
 
   return (
+    <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}
+  >
     <div className="flex items-center justify-center min-h-screen bg-[url('/Login.avif')] bg-cover bg-gray-100">
       <ToastContainer
         position="top-right"
@@ -179,5 +185,6 @@ export default function Signup() {
         </div>
       </div>
     </div>
+    </motion.div>
   );
 }

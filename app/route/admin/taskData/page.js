@@ -50,6 +50,11 @@ const confirmPayment=async(taskId) => {
 
   return (
     <>
+      <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}
+  >
       <Navbar />
       <ToastContainer
         position="top-right"
@@ -62,11 +67,6 @@ const confirmPayment=async(taskId) => {
         draggable
         pauseOnHover
       />
-      <motion.div
-    initial={{ opacity: 0, scale: 0.5 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.5 }}
-  >
       <div className="p-8 w-full mx-auto mt-14 mb-36">
         <h2 className="text-5xl mb-12 font-semibold ml-96">Assigned Tasks</h2>
         <div className="grid grid-cols-2 gap-4">

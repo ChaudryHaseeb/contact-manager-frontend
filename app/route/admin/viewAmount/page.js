@@ -27,12 +27,12 @@ const ViewAmount = () => {
 
   return (
     <>
-    <Navbar/>
     <motion.div
     initial={{ opacity: 0, scale: 0.5 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.5 }}
   >
+    <Navbar/>
     <div className="p-8 max-w-4xl mx-auto mt-16">
       <h1 className="text-4xl font-bold mb-10 text-center">Task Payment Details</h1>
 

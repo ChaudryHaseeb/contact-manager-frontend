@@ -8,9 +8,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
+import { motion } from "framer-motion"
 
 const Login = () => {
-  
 
       //---------------------------------------- CONSTANTS DICLARATION ------------------------------------------
 
@@ -34,8 +34,7 @@ const Login = () => {
   useEffect(() => {
     if (checkLoginStatus()) {
       const role = localStorage.getItem("role");
-
-      if (role === "admin") {
+      if (role === `"admin"`) {
         router.push("/route/admin/home");
       } else {
         router.push("/route/user/home");
@@ -62,7 +61,7 @@ const Login = () => {
       if (response.ok) {
         const result = await response.json();
         localStorage.setItem("token", JSON.stringify(result.accessToken));
-        localStorage.setItem("role", (result.user.role));
+        localStorage.setItem("role", JSON.stringify(result.user.role));
         toast.success("🦄 Login successful!", {
           position: "top-right",
           autoClose: 1000,
@@ -83,6 +82,11 @@ const Login = () => {
   };
 
   return (
+    <motion.div
+    initial={{ opacity: 0, scale: 0.5 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}
+  >
     <div className="flex items-center justify-center min-h-screen bg-[url('/Login.avif')] bg-cover bg-gray-100">
       <ToastContainer
         position="top-right"
@@ -166,6 +170,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </motion.div>
   );
 };
 

@@ -50,12 +50,12 @@ export default function AssignTask() {
 
   return (
     <>
-    <Navbar/>
     <motion.div
     initial={{ opacity: 0, scale: 0.5 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.5 }}
   >
+    <Navbar/>
 
     <div className="p-8 max-w-4xl mx-auto mt-16">
     <ToastContainer
@@ -82,7 +82,7 @@ export default function AssignTask() {
         </div>
         <div className="mb-4">
           <label className="block mb-2">Assign To (User ID):</label>
-          <CustomSelect onChange={(selectedUserId) => setAssignedTo(selectedUserId)}/>
+          <CustomSelect instanceId="select-id" onChange={(selectedUserId) => setAssignedTo(selectedUserId)}/>
         </div>
         <div className="mb-4">
           <label className="block mb-2">Hourly Rate:</label>
