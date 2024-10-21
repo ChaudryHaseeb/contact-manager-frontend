@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import ApiService from '../../../config/service/apiConfig';
 import Navbar from '@/components/layout/Navbar';
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 const EarnAmount = () => {
   const [tasks, setTasks] = useState([]);

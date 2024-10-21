@@ -14,6 +14,7 @@ const Navbar = () => {
   // Logout function
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem('role');
     setIsLoggedIn(false);
   };
 
@@ -72,6 +73,7 @@ const Navbar = () => {
           <Image src="/Home-Gradient.gif" alt="Logo" unoptimized width={40} height={25} />
         </Link>
       </div>
+      
       <div className="nav">
         <ul className="flex items-center space-x-2 font-bold md:text-md md:space-x-6 py-2">
           {["/management", "/contactus", "/updates"].map((path) => (

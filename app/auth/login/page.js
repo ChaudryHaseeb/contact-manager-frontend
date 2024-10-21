@@ -33,13 +33,25 @@ const Login = () => {
 
   useEffect(() => {
     if (checkLoginStatus()) {
-      const role = localStorage.getItem("role");
-      if (role === `"admin"`) {
-        router.push("/route/admin/home");
-      } else {
-        router.push("/route/user/home");
-      }
-    }
+      try {
+        const role = localStorage.getItem("role");
+        if (role === `"admin"`) {
+          toast.success('First Logout Your Account');
+            setTimeout(() => {
+              router.push("/route/admin/home");
+            }, 1000);
+
+        } else {
+          toast.success('First Logout Your Account');
+            setTimeout(() => {
+              router.push("/route/user/home");
+            }, 1000);
+
+        }
+      } catch (error) {
+        toast.error('SERVER ERROR');
+      };
+      };
   }, [router]);
 
       //---------------------------------------- ONSUBMIT FUNCTION ------------------------------------------

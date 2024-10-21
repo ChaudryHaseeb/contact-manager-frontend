@@ -29,14 +29,14 @@ export default function CardPaymentDetails() {
     }, []);
     const calculatePercentage = (partial, total) => (total > 0 ? (partial / total) * 100 : 0);
   return (
-    <Card className="max-w-fit w-[500px] h-[400px] bg-[#2b1d35] text-white cursor-pointer border border-[#bc63ff] border-none">
-      <CardContent className="flex gap-4 p-4">
+    <Card className="max-w-fit md:w-[500px] md:h-[400px] bg-[#2b1d35] text-white cursor-pointer border border-[#bc63ff] border-none w-[200px] h-[200px]">
+      <CardContent className="flex gap-4 p-4 ">
         <div className="grid items-center gap-2">
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm">Total Amount</div>
-            <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
+            <div className="md:text-sm text-[11px]">Total Amount</div>
+            <div className="flex items-baseline gap-1 md:text-xl text-[10px] font-bold tabular-nums leading-none">
               {total}
-              <span className="text-sm font-normal">
+              <span className="md:text-sm text-[9px] font-normal">
                 $
               </span>
             </div>
@@ -44,10 +44,10 @@ export default function CardPaymentDetails() {
           <Separator orientation="row" className="mx-2 w-px" />
 
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm">Paid Amount</div>
-            <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
+            <div className="md:text-sm text-[11px]">Paid Amount</div>
+            <div className="flex items-baseline gap-1 md:text-xl text-[10px] font-bold tabular-nums leading-none">
               {totalPaid}
-              <span className="text-sm font-normal ">
+              <span className="md:text-sm text-[9px] font-normal ">
                 $
               </span>
             </div>
@@ -55,10 +55,10 @@ export default function CardPaymentDetails() {
           <Separator orientation="row" className="mx-2 w-px" />
 
           <div className="grid flex-1 auto-rows-min gap-0.5">
-            <div className="text-sm">Unpaid Amount</div>
-            <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
+            <div className="md:text-sm text-[11px]">Unpaid Amount</div>
+            <div className="flex items-baseline gap-1 md:text-xl text-[10px] font-bold tabular-nums leading-none">
               {totalUnPaid}
-              <span className="text-sm font-normal">
+              <span className="md:text-sm text-[9px] font-normal">
                 $
               </span>
             </div>
